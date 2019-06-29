@@ -14,3 +14,4 @@ dist
 benchmarkDist
 npm
 .idea
+.env

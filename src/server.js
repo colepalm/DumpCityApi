@@ -1,8 +1,9 @@
 import cors from 'cors';
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import 'dotenv/config';
 
-import models from './models'
+import models, { sequelize } from './models'
 import resolvers from './resolvers'
 import schema from './schema'
 
@@ -23,5 +24,8 @@ server.applyMiddleware({ app, path: '/graphql' });
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+sequelize.sync().then(async () => {
+  app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+});
+
 
