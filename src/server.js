@@ -60,13 +60,13 @@ const eraseDatabaseOnSync = true;
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
-    createUsersWithMessages();
+    createUsersWithMessages(new Date());
   }
 
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 });
 
-const createUsersWithMessages = async () => {
+const createUsersWithMessages = async date => {
   await models.User.create(
     {
       username: 'cpalm',
@@ -75,7 +75,7 @@ const createUsersWithMessages = async () => {
       role: 'ADMIN',
       messages: [
         {
-          text: 'DumpCityApi Creator',
+          text: 'DumpCityApi Creator'
         },
       ],
     },
@@ -92,9 +92,11 @@ const createUsersWithMessages = async () => {
       messages: [
         {
           text: 'Curating stuff',
+          createdAt: date.setSeconds(date.getSeconds() + 1),
         },
         {
           text: 'Blahgs',
+          createdAt: date.setSeconds(date.getSeconds() + 1),
         },
       ],
     },
