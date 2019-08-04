@@ -75,7 +75,8 @@ const createUsersWithMessages = async date => {
       role: 'ADMIN',
       messages: [
         {
-          text: 'DumpCityApi Creator'
+          text: 'DumpCityApi Creator',
+          createdAt: date.setSeconds(date.getSeconds() + 1),
         },
       ],
     },
