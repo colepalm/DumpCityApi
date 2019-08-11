@@ -4,7 +4,9 @@
   "description": "GraphQL server for DumpCity",
   "main": "src/server.js",
   "scripts": {
-    "dev:server": "nodemon --exec babel-node src/server.js"
+    "start": "nodemon --exec babel-node src/server.js",
+    "test-server": "TEST_DATABASE=testdatabase npm start",
+    "test": "mocha --require @babel/register 'src/**/*.spec.js'"
   },
   "author": "Cole Palm",
   "license": "MIT",
@@ -28,6 +30,9 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "axios": "^0.19.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
     "nodemon": "^1.19.1"
   }
 }
