@@ -9,6 +9,6 @@ const customScalarResolver = {
 
 export default [
   customScalarResolver,
+  userResolvers,
   messageResolvers,
-  userResolvers
 ];
