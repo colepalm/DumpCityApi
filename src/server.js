@@ -4,10 +4,12 @@ import jwt from 'jsonwebtoken'
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import 'dotenv/config';
 import http from 'http';
+import DataLoader from "dataloader";
 
 import models, { sequelize } from './models'
 import resolvers from './resolvers'
 import schema from './schema'
+import loaders from "./loaders";
 
 const app = express();
 
@@ -45,8 +47,13 @@ const server = new ApolloServer({
   context: async ({ req, connection }) => {
     if (connection) {
       return {
-        models
-      }
+        models,
+        loaders: {
+          user: new DataLoader(keys =>
+            loaders.user.batchUsers(keys, models),
+          ),
+        },
+      };
     }
 
     if (req) {
@@ -55,10 +62,15 @@ const server = new ApolloServer({
       return {
         models,
         me,
-        secret: process.env.SECRET
-      }
+        secret: process.env.SECRET,
+        loaders: {
+          user: new DataLoader(keys =>
+            loaders.user.batchUsers(keys, models),
+          ),
+        },
+      };
     }
-  }
+  },
 });
 
 server.applyMiddleware({ app, path: '/graphql' });
