@@ -4,6 +4,8 @@
   "description": "GraphQL server for DumpCity",
   "main": "src/server.js",
   "scripts": {
+    "serve": "node dist/server.js",
+    "build": "babel src --out-dir dist",
     "start": "nodemon $NODE_DEBUG_OPTION --exec babel-node src/server.js",
     "test-server": "TEST_DATABASE=testdatabase npm start",
     "test": "mocha --require @babel/register 'src/**/*.spec.js'"
@@ -11,6 +13,7 @@
   "author": "Cole Palm",
   "license": "MIT",
   "dependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
