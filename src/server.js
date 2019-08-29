@@ -89,7 +89,7 @@ sequelize.sync({ force: isTest }).then(async () => {
     createUsersWithMessages(new Date());
   }
 
-  httpServer.listen({ PORT }, () => {
+  httpServer.listen(PORT, () => {
     console.log(`Apollo Server on http://localhost:${PORT}/graphql`);
   });
 });
