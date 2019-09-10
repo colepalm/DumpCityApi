@@ -1,5 +1,5 @@
 const show = (sequelize, DataTypes) => {
-  return sequelize.define('message', {
+  return sequelize.define('show', {
     date: {
       type: DataTypes.STRING,
       unique: true,

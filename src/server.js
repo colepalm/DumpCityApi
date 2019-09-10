@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import jwt from 'jsonwebtoken'
 import { ApolloServer, AuthenticationError } from 'apollo-server-express';
-import 'dotenv/config';
+import * as dotenv from "dotenv";
 import http from 'http';
 import DataLoader from "dataloader";
 
@@ -15,12 +15,14 @@ const app = express();
 
 app.use(cors());
 
+const env = dotenv.config().parsed ? dotenv.config().parsed : process.env;
+
 const getMe = async req => {
   const token = req.headers['x-token'];
 
   if (token) {
     try {
-      return await jwt.verify(token, process.env.SECRET);
+      return await jwt.verify(token, env.SECRET);
     } catch (e) {
       throw new AuthenticationError(
         'Your session expired. Sign in again.',
@@ -87,6 +89,13 @@ const eraseDatabaseOnSync = true;
 const isTest = !!process.env.TEST_DATABASE;
 
 sequelize.sync({ force: isTest }).then(async () => {
+  await models.Show.create(
+    {
+      date: '12/06/2001',
+      venue: 'Home'
+    }
+  );
+
   if (isTest) {
     createUsersWithMessages(new Date());
   }

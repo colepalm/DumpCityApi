@@ -1,8 +1,13 @@
 import Sequelize from 'sequelize';
+import * as dotenv from "dotenv";
+import * as pg from "pg";
 
 let sequelize;
-if (process.env.DATABASE_URL) {
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
+const env = dotenv.config().parsed ? dotenv.config().parsed : process.env;
+
+pg.defaults.ssl = true;
+if (env.DATABASE_URL) {
+  sequelize = new Sequelize(env.DATABASE_URL, {
     dialect: 'postgres',
   });
 } else {
