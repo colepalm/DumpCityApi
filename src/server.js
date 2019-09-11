@@ -89,13 +89,6 @@ const eraseDatabaseOnSync = true;
 const isTest = !!process.env.TEST_DATABASE;
 
 sequelize.sync({ force: isTest }).then(async () => {
-  await models.Show.create(
-    {
-      date: '12/06/2001',
-      venue: 'Home'
-    }
-  );
-
   if (isTest) {
     createUsersWithMessages(new Date());
   }

@@ -13,7 +13,9 @@ export default gql`
     }
   
     type Show {
+        id: ID!
         date: String!
         venue: String!
+        rating: Int
     }
 `
