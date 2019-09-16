@@ -6,10 +6,10 @@ export default gql`
     }
 
     extend type Mutation {
-        addShow(
+        createShow(
             date: String!
             venue: String!
-        ): Boolean!
+        ): Show!
     }
   
     type Show {
