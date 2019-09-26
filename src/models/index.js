@@ -24,7 +24,8 @@ if (env.DATABASE_URL) {
 const models = {
   User: sequelize.import('./user'),
   Message: sequelize.import('./message'),
-  Show: sequelize.import('./show')
+  Show: sequelize.import('./show'),
+  Venue: sequelize.import('./venue')
 };
 
 Object.keys(models).forEach(key => {
