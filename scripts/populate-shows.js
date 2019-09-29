@@ -6,9 +6,11 @@ const getShows = async () => {
   const res = await axios.get(url);
 
   for (const show of res.data) {
-    const query = `query {
-                    mutation(date: ${show.dateTime}, venue:)
-                   }`
+    const createShowQuery = `query {
+                               mutation{
+                                 createShow(date: ${show.dateTime}, venue:)
+                                }
+                              }`
   }
 };
 

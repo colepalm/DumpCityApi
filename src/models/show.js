@@ -1,5 +1,5 @@
 const show = (sequelize, DataTypes) => {
-  return sequelize.define('show', {
+  const Show =  sequelize.define('show', {
     date: {
       type: DataTypes.STRING,
       unique: true,
@@ -8,15 +8,25 @@ const show = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    venue: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
+    venueId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'venues',
+        key: 'id'
       },
     },
+    rating: {
+      type: DataTypes.FLOAT,
+      unique: false,
+      allowNull: true,
+    }
   });
+
+  Show.associate = models => {
+    Show.belongsTo(models.Venue, { onDelete: 'CASCADE' });
+  };
+
+  return Show;
 };
 
 export default show;

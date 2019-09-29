@@ -8,14 +8,17 @@ export default gql`
     extend type Mutation {
         createShow(
             date: String!
-            venue: String!
+            venueName: String!
+            city: String,
+            state: String,
+            country: String,
         ): Show!
     }
   
     type Show {
         id: ID!
         date: String!
-        venue: String!
+        venueId: Int!
         rating: Int
     }
 `
