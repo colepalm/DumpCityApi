@@ -1,3 +1,5 @@
+const gql = require('apollo-server-express').gql;
+
 const axios = require('axios');
 
 const url = 'https://www.phantasytour.com/api/bands/9/shows?pageSize=100&page=1';
@@ -8,24 +10,20 @@ const getShows = async () => {
   for (const show of shows.data) {
     const { city, state } = getLocale(show.venue.locale);
 
-    const createShowQuery = `mutation {
-                               createShow(date: $date,
-                                          venue: $venue
-                                          city: $city,
-                                          state: $state
-                                          ) {
-                                  id
-                                },
-                                variables: {
-                                   date: ${show.dateTime},
-                                   venue: ${show.venue.name},
-                                   city: ${city},
-                                   state: ${state}
-                                }
-                              }`;
     try {
-      const res = await axios.post('http://localhost:8000/graphql', {
-        query: createShowQuery
+      const createShowQuery = gql`mutation {
+          createShow(
+              date: "${show.dateTime}",
+              venueName: "${show.venue.name}",
+              city: "${city}",
+              state: "${state}"
+          ) {
+              id
+          }
+      }`;
+
+      const res = await axios.post('https://dump-city-api.herokuapp.com/graphql', {
+        query: createShowQuery.loc.source.body
       });
       console.log(res);
     } catch (error) {
@@ -33,6 +31,7 @@ const getShows = async () => {
     }
   }
 };
+
 
 const getLocale = (locale) => {
   const comma = locale.indexOf(',');

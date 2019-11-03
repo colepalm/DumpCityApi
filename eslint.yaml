@@ -1,0 +1,12 @@
+plugins:
+  - graphql
+parserOptions:
+  ecmaVersion: 2015
+rules:
+  graphql/named-operations: error
+  graphql/capitalized-type-name: error
+  graphql/no-deprecated-fields: error
+  graphql/template-strings:
+    - error
+    - env: literal
+      tagName: gql
