@@ -12,7 +12,7 @@ export default {
       });
 
       if (!venue) {
-        if (city && state && country) {
+        if (city && state) {
           venue = await models.Venue.create({name: venueName, city, state, country})
         } else {
           throw new ValidationError('Venue not found')
