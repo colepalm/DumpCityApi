@@ -84,8 +84,6 @@ server.installSubscriptionHandlers(httpServer);
 
 const PORT = process.env.PORT || 8000;
 
-const eraseDatabaseOnSync = true;
-
 const isTest = !!process.env.TEST_DATABASE;
 
 sequelize.sync({ force: isTest }).then(async () => {

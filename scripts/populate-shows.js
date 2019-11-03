@@ -2,7 +2,7 @@ const gql = require('apollo-server-express').gql;
 
 const axios = require('axios');
 
-const url = 'https://www.phantasytour.com/api/bands/9/shows?pageSize=100&page=1';
+const url = 'https://www.phantasytour.com/api/bands/9/shows?pageSize=100&page=25';
 
 const getShows = async () => {
   const shows = await axios.get(url);
@@ -17,9 +17,8 @@ const getShows = async () => {
               venueName: "${show.venue.name}",
               city: "${city}",
               state: "${state}"
-          ) {
-              id
-          }
+              country: "United States"
+          ) { id }
       }`;
 
       const res = await axios.post('https://dump-city-api.herokuapp.com/graphql', {
