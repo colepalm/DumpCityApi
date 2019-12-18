@@ -25,7 +25,9 @@ const models = {
   User: sequelize.import('./user'),
   Message: sequelize.import('./message'),
   Show: sequelize.import('./show'),
-  Venue: sequelize.import('./venue')
+  Venue: sequelize.import('./venue'),
+  SongInstance: sequelize.import('./songInstance'),
+  Song: sequelize.import('./song')
 };
 
 Object.keys(models).forEach(key => {

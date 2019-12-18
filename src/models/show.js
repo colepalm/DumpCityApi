@@ -11,7 +11,7 @@ const show = (sequelize, DataTypes) => {
     venueId: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'venues',
+        model: 'venue',
         key: 'id'
       },
     },
