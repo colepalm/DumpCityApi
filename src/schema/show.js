@@ -20,5 +20,6 @@ export default gql`
         date: String!
         venueId: Int!
         rating: Int
+        setlist: [SongInstance]!
     }
 `

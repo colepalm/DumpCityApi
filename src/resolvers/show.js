@@ -1,4 +1,4 @@
-import {ValidationError} from "sequelize";
+import { ValidationError } from "sequelize";
 
 export default {
   Query: {

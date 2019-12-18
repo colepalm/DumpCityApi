@@ -19,6 +19,11 @@ const show = (sequelize, DataTypes) => {
       type: DataTypes.FLOAT,
       unique: false,
       allowNull: true,
+    },
+    setlist: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
+      unique: true,
+      allowNull: true,
     }
   });
 
