@@ -1,6 +1,6 @@
 const song = (sequelize, DataTypes) => {
-  return Song = sequelize.define('song', {
-      date: {
+  return sequelize.define('song', {
+      name: {
           type: DataTypes.STRING,
           unique: true,
           allowNull: false,
@@ -8,5 +8,27 @@ const song = (sequelize, DataTypes) => {
               notEmpty: true,
           },
       },
+      firstPlayed: {
+          type: DataTypes.INTEGER,
+          unique: false,
+          allowNull: true,
+      },
+      lastPlayed: {
+          type: DataTypes.INTEGER,
+          unique: false,
+          allowNull: true,
+      },
+      currentGap: {
+          type: DataTypes.INTEGER,
+          unique: false,
+          allowNull: true,
+      },
+      timesPlayed: {
+          type: DataTypes.INTEGER,
+          unique: false,
+          allowNull: true,
+      }
   });
 };
+
+export default song;

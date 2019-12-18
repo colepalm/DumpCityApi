@@ -9,12 +9,12 @@ const songInstance = (sequelize, DataTypes) => {
       },
     },
     setNumber: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       unique: false,
       allowNull: false,
     },
     position: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       unique: false,
       allowNull: false,
     },
@@ -23,7 +23,7 @@ const songInstance = (sequelize, DataTypes) => {
       unique: false,
       allowNull: false,
       references: {
-        model: 'show',
+        model: 'shows',
         key: 'id'
       },
     },
