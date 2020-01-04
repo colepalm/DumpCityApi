@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
     extend type Mutation {
         createSongInstance(
-            song: String!
+            songId: String!
             setNumber: Int!
             position: Int!
             show: Int!,

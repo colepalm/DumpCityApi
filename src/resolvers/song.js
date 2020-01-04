@@ -1,5 +1,7 @@
 export default {
     Mutation: {
-        // createSong: async (parent, args, { models }) => await models.Song.
+        createSong: (parent, { name }, { models }) => {
+            return models.Song.create({name, timesPlayed: 1})
+        }
     }
 }
