@@ -1,7 +1,7 @@
 const songInstance = (sequelize, DataTypes) => {
   const SongInstance = sequelize.define('songInstance', {
-    song: {
-      type: DataTypes.STRING,
+    songId: {
+      type: DataTypes.UUID,
       unique: false,
       allowNull: false,
       validate: {
@@ -19,7 +19,7 @@ const songInstance = (sequelize, DataTypes) => {
       allowNull: false,
     },
     showId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       unique: false,
       allowNull: false,
       references: {

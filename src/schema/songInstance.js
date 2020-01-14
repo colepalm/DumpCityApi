@@ -6,7 +6,7 @@ export default gql`
             songId: String!
             setNumber: Int!
             position: Int!
-            show: Int!,
+            showId: String!,
             description: String
             jamChart: Boolean
         ): SongInstance!
