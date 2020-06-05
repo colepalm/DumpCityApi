@@ -1,0 +1,22 @@
+{
+  "type": "postgres",
+  "host": "dumpcity.cgcxjdbkcs48.us-east-2.rds.amazonaws.com",
+  "port": 5432,
+  "username": "postgres",
+  "password": "TakeADump!",
+  "database": "dumpcity",
+  "synchronize": false,
+  "logging": false,
+  "entities": [
+    "src/models/**/*.ts"
+  ],
+  "migrations": [
+    "src/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "src/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "migrationsDir": "src/migration"
+  }
+}
