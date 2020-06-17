@@ -1,6 +1,8 @@
 import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
+import { Show } from './Show';
+
 @Entity()
 @ObjectType()
 export class Venue extends BaseEntity {
@@ -28,9 +30,9 @@ export class Venue extends BaseEntity {
     @Column({ default: 0 })
     timesPlayed: number;
 
-    // @OneToOne(() => Show, show => show.id)
-    // firstTime: Show;
-    //
-    // @OneToOne(() => Show, show => show.id)
-    // lastTime: Show;
+    @OneToOne(() => Show, show => show.id)
+    firstTime: Show;
+
+    @OneToOne(() => Show, show => show.id)
+    lastTime: Show;
 }
