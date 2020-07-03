@@ -8,7 +8,9 @@ import { Show } from '../models/Show';
 export class SongInstanceResolver {
     @Mutation(() => SongInstance)
     async createSongInstance(@Arg('data') data: CreateSongInstanceInput) {
-         // TODO: Add find of song as first piece of this method
+        const song = await Show.findOne({ where: { id: data.song }})
+        if (!song) throw new Error("Show not found!");
+
         const show = await Show.findOne({ where: { id: data.show }})
         if (!show) throw new Error("Show not found!");
 

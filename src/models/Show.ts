@@ -1,7 +1,8 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
+import { SongInstance } from './SongInstance';
 
 @Entity()
 @ObjectType()
@@ -22,6 +23,6 @@ export class Show extends BaseEntity {
     @Column({ default: 0 })
     rating: number;
 
-    // @OneToMany(() => SongInstance, songInstance => songInstance.id)
-    // setlist: SongInstance[];
+    @OneToMany(() => SongInstance, songInstance => songInstance.id)
+    setlist: SongInstance[];
 }

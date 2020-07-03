@@ -3,6 +3,9 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateSongInstanceInput {
     @Field()
+    song: string;
+
+    @Field()
     setNumber: number
 
     @Field()
