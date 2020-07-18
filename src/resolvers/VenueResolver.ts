@@ -3,12 +3,20 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { CreateVenueInput } from '../inputs/CreateVenueInput';
 import { Venue } from '../models/Venue';
 import { UpdateVenueInput } from '../inputs/UpdateVenueInput';
+import { FindVenueInput } from '../inputs/FindVenueInput';
 
 @Resolver()
 export class VenueResolver {
     @Query(() => Venue)
-    venue(@Arg('id') id: string) {
-        return Venue.findOne({ where: { id } })
+    venue(@Arg('venue') venue: FindVenueInput) {
+        return venue.id ?
+            Venue.findOne({ where: { id: venue.id } }) :
+            Venue.findOne({ where:
+                    {
+                        city: venue.city,
+                        name: venue.name
+                    }
+            })
     }
 
     @Query(() => [Venue])
