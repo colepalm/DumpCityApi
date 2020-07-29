@@ -8,15 +8,19 @@ import { FindVenueInput } from '../inputs/FindVenueInput';
 @Resolver()
 export class VenueResolver {
     @Query(() => Venue)
-    venue(@Arg('venue') venue: FindVenueInput) {
-        return venue.id ?
-            Venue.findOne({ where: { id: venue.id } }) :
-            Venue.findOne({ where:
+    async venue(@Arg('venue') venue: FindVenueInput) {
+        const found = venue.id ?
+            await Venue.findOne({ where: { id: venue.id } }) :
+            await Venue.findOne({ where:
                     {
                         city: venue.city,
                         name: venue.name
                     }
             })
+
+        if (!found) throw new Error('Venue not found!')
+
+        return found;
     }
 
     @Query(() => [Venue])
@@ -43,7 +47,7 @@ export class VenueResolver {
     }
 
     @Mutation(() => Boolean)
-    async deleteVenue(@Arg("id") id: string) {
+    async deleteVenue(@Arg('id') id: string) {
         const venue = await Venue.findOne({ where: { id } });
         if (!venue) throw new Error("Venue not found!");
         await venue.remove();

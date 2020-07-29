@@ -20,7 +20,10 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.0.2",
+    "@lifeomic/axios-fetch": "^1.4.2",
+    "apollo-link-http": "^1.5.17",
     "axios": "^0.19.2",
+    "graphql-tag": "^2.11.0",
     "nodemon": "^2.0.4",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.3"
