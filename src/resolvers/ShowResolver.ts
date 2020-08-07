@@ -7,7 +7,7 @@ import { Venue } from '../models/Venue';
 @Resolver()
 export class ShowResolver {
     @Query(() => Show)
-    show(@Arg('id') id: string) {
+    async show(@Arg('id') id: string) {
         return Show.findOne({ where: { id } })
     }
 

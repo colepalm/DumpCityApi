@@ -11,7 +11,7 @@ export class SongInstance extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Song, song => song.id)
+    @ManyToOne(() => Song, song => song.id, { eager: true })
     song: Song;
 
     @Field(() => Number)
@@ -23,7 +23,7 @@ export class SongInstance extends BaseEntity {
     position: number
 
     @Field(() => Show)
-    @ManyToOne(() => Show, show => show.id)
+    @ManyToOne(() => Show, show => show.id, { eager: true })
     show: Show;
 
     @Field(() => String)

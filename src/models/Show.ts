@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
@@ -16,7 +23,7 @@ export class Show extends BaseEntity {
     date: string;
 
     @Field(() => Venue)
-    @ManyToOne(() => Venue, venue => venue.id)
+    @ManyToOne(() => Venue, venue => venue.id, { eager: true })
     venue: Venue;
 
     @Field(() => Number)
