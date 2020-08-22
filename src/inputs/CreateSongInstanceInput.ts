@@ -19,4 +19,7 @@ export class CreateSongInstanceInput {
 
     @Field({ nullable: true })
     jamChart?: boolean
+
+    @Field({ nullable: true })
+    segueType: string;
 }

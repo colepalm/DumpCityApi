@@ -9,7 +9,7 @@ import {
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
-import { SongInstance } from './SongInstance';
+import { Set } from './Set'
 
 @Entity()
 @ObjectType()
@@ -30,6 +30,6 @@ export class Show extends BaseEntity {
     @Column({ default: 0 })
     rating: number;
 
-    @OneToMany(() => SongInstance, songInstance => songInstance.id)
-    setlist: SongInstance[];
+    @OneToMany(() => Set, set => set.id, { eager: true })
+    setlist: Set[];
 }

@@ -19,7 +19,6 @@ export class ShowResolver {
     @Mutation(() => Show)
     async createShow(@Arg('data') data: CreateShowInput) {
         const venue = await Venue.findOne({ where: { id: data.venue } });
-        console.log(venue);
         if (!venue) throw new Error("Venue not found!");
         const show = Show.create({ date: data.date, venue });
         await show.save();

@@ -18,7 +18,7 @@ async function main() {
             SongInstanceResolver,
             VenueResolver
         ],
-        validate: false
+        validate: true
     });
     const server = new ApolloServer({ schema });
     await server.listen(4000);
