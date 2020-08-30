@@ -1,39 +1,17 @@
-import axios from 'axios'
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import gql from 'graphql-tag'
 import { CreateVenueInput } from '../src/inputs/CreateVenueInput';
 import { CreateShowInput } from '../src/inputs/CreateShowInput';
-
-const { buildAxiosFetch } = require("@lifeomic/axios-fetch");
-
-const ptBaseUrl = 'https://www.phantasytour.com/api/bands/9';
-const dumpCityBaseUrl = 'http://localhost:4000'
+import { DumpCityService, PtService } from './services';
 
 const VENUE_NOT_FOUND = 'Venue not found!'
 
-const ptClient = axios.create({
-    baseURL: ptBaseUrl,
-    timeout: 1000,
-    responseType: 'json',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-});
-
-const link = createHttpLink({
-    uri: dumpCityBaseUrl,
-    fetch: buildAxiosFetch(axios)
-})
-
-const dumpCityClient = new ApolloClient({
-    link: link,
-    cache: new InMemoryCache()
-})
+const pt = new PtService();
+const dumpCity = new DumpCityService();
 
 const main = async () => {
     let index = 26;
     while (index > 0) {
-        const response = await ptClient.get(`/shows?pageSize=100&page=${index}`)
+        const response = await pt.client.get(`/shows?pageSize=100&page=${index}`)
 
         for (const show of response.data) {
             const city = show.venue.locale.substr(0, show.venue.locale.indexOf(','));
@@ -49,7 +27,7 @@ const main = async () => {
                 }
             `
             try {
-                const res = await dumpCityClient.query({
+                const res = await dumpCity.client.query({
                     query: getVenue
                 });
                 if (res.data.venue.id) {
@@ -95,7 +73,7 @@ const createNewVenue = async (venue: CreateVenueInput) => {
         }
     `
     try {
-        let res = await dumpCityClient.mutate({
+        let res = await dumpCity.client.mutate({
             mutation: createVenue
         });
         return res.data.createVenue.id
@@ -119,7 +97,7 @@ const createNewShow = async (show: CreateShowInput) => {
     `
 
     try {
-        let res = await dumpCityClient.mutate({
+        let res = await dumpCity.client.mutate({
             mutation: createShow
         })
         console.log(res);
