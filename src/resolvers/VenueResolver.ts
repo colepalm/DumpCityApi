@@ -14,10 +14,9 @@ export class VenueResolver {
                         city: venue.city,
                         name: venue.name
                     }
-            })
+            });
 
-        if (!found) throw new Error('Venue not found!')
-
+        if (!found) throw new Error('Venue not found!');
         return found;
     }
 

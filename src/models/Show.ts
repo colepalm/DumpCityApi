@@ -1,35 +1,36 @@
 import {
     BaseEntity,
     Column,
-    Entity,
+    Entity, JoinColumn,
     ManyToOne,
-    OneToMany,
+    OneToMany, OneToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
 import { Set } from './Set'
+import { Song } from './Song';
 
 @Entity()
 @ObjectType()
 export class Show extends BaseEntity {
-    @Field(() => ID)
+    @Field(_ => ID)
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field(() => String)
+    @Field(_ => String)
     @Column()
     date: string;
 
-    @Field(() => Venue)
-    @ManyToOne(() => Venue, venue => venue.id, { eager: true })
+    @Field(_ => Venue)
+    @OneToMany(() => Venue, venue => venue.id, { eager: true })
     venue: Venue;
 
-    @Field(() => Number)
+    @Field(_ => Number)
     @Column({ default: 0 })
     rating: number;
 
-    @OneToMany(() => Set, set => set.id, { eager: true })
+    @OneToMany(_ => Set, set => set.id, { eager: true })
     setlist: Set[];
 }

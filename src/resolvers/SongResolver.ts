@@ -10,7 +10,10 @@ export class SongResolver {
     async song(@Arg('song') song: FindSongInput) {
         const found = song.id ?
             await Song.findOne({ where: { id: song.id } }) :
-            await Song.findOne({ where: { name: song.name } }})
+            await Song.findOne({ where: { name: song.name } });
+
+        if (!found) throw new Error('Song not found!');
+        return found;
     }
 
 
