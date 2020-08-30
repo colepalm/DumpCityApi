@@ -7,6 +7,7 @@ import { buildSchema } from 'type-graphql';
 import { ShowResolver } from './resolvers/ShowResolver';
 import { VenueResolver } from './resolvers/VenueResolver';
 import { SongInstanceResolver } from './resolvers/SongInstanceResolver';
+import { SongResolver } from './resolvers/SongResolver';
 
 async function main() {
     const connection = await createConnection();
@@ -15,6 +16,7 @@ async function main() {
     const schema = await buildSchema({
         resolvers: [
             ShowResolver,
+            SongResolver,
             SongInstanceResolver,
             VenueResolver
         ],

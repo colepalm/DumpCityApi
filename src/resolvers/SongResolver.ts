@@ -1,6 +1,6 @@
 import { Arg, Mutation, Resolver } from 'type-graphql';
 
-import { Song } from '../models/Song';
+import { Show, Song } from '../models';
 import { CreateSongInput } from '../inputs/CreateSongInput';
 import { UpdateSongInput } from '../inputs/UpdateSongInput';
 
@@ -8,7 +8,9 @@ import { UpdateSongInput } from '../inputs/UpdateSongInput';
 export class SongResolver {
     @Mutation(() => Song)
     async createSong(@Arg('data') data: CreateSongInput) {
-        const song = Song.create(data);
+        const song = Song.create({
+            name: data.name,
+        });
         song.timesPlayed = 0;
 
         await song.save();

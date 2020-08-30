@@ -35,11 +35,6 @@ export class SongInstance extends BaseEntity {
     jamChart: boolean
 
     @Field(() => String)
-    segueType: SegueType
-}
-
-interface SegueType {
-    longArrow: '->',
-    arrow: '>',
-    inverted: '><'
+    @Column()
+    segueType: string
 }

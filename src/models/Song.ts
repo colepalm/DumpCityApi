@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
+import { Show } from './Show';
 
 @Entity()
 @ObjectType()
@@ -9,18 +10,26 @@ export class Song extends BaseEntity {
     id: number
 
     @Field(() => String)
-    @Column()
+    @Column({ unique: true })
     name: string;
 
-    @Field(() => String)
-    @Column({ nullable: true })
-    firstPlayed: string;
+    @Field(() => Show)
+    @OneToOne(
+        () => Show,
+        show => show.id,
+        { eager: true, nullable: true}
+        )
+    firstPlayed: Show;
 
-    @Field(() => String)
-    @Column({ nullable: true })
-    lastPlayed: string;
+    @Field(() => Show)
+    @OneToOne(
+        () => Show,
+        show => show.id,
+        { eager: true, nullable: true }
+        )
+    lastPlayed: Show;
 
-    @Field(() => String)
+    @Field(() => Number)
     @Column({ nullable: true })
     currentGap: number;
 

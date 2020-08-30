@@ -3,12 +3,13 @@ import { Arg, Mutation, Resolver } from 'type-graphql';
 import { SongInstance } from '../models/SongInstance';
 import { CreateSongInstanceInput } from '../inputs/CreateSongInstanceInput';
 import { Show } from '../models/Show';
+import { Song } from '../models/Song';
 
 @Resolver()
 export class SongInstanceResolver {
     @Mutation(() => SongInstance)
     async createSongInstance(@Arg('data') data: CreateSongInstanceInput) {
-        const song = await Show.findOne({ where: { id: data.song }})
+        const song = await Song.findOne({ where: { id: data.song }})
         if (!song) throw new Error("Show not found!");
 
         const show = await Show.findOne({ where: { id: data.show }})
