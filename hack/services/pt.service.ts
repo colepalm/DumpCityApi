@@ -4,7 +4,7 @@ export class PtService {
     public client: AxiosInstance
 
     constructor() {
-        const ptBaseUrl = 'https://www.phantasytour.com/api/bands/9';
+        const ptBaseUrl = 'https://www.phantasytour.com/api';
 
         this.client = axios.create({
             baseURL: ptBaseUrl,

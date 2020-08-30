@@ -1,11 +1,19 @@
-import { Arg, Mutation, Resolver } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
-import { Show, Song } from '../models';
-import { CreateSongInput } from '../inputs/CreateSongInput';
-import { UpdateSongInput } from '../inputs/UpdateSongInput';
+import { Song } from '../models';
+import { CreateSongInput, UpdateSongInput } from '../inputs';
+import { FindSongInput } from '../inputs/FindSongInput';
 
 @Resolver()
 export class SongResolver {
+    @Query(() => Song)
+    async song(@Arg('song') song: FindSongInput) {
+        const found = song.id ?
+            await Song.findOne({ where: { id: song.id } }) :
+            await Song.findOne({ where: { name: song.name } }})
+    }
+
+
     @Mutation(() => Song)
     async createSong(@Arg('data') data: CreateSongInput) {
         const song = Song.create({

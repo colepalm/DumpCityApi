@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon -w src --ext ts --exec ts-node src/index.ts",
+    "populate-setlists": "ts-node hack/populate-setlists.ts",
     "populate-shows": "ts-node hack/populate-shows.ts"
   },
   "author": "Cole Palm",

@@ -10,8 +10,8 @@ const dumpCity = new DumpCityService();
 
 const main = async () => {
     let index = 26;
-    while (index > 0) {
-        const response = await pt.client.get(`/shows?pageSize=100&page=${index}`)
+    while(index > 0) {
+        const response = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`)
 
         for (const show of response.data) {
             const city = show.venue.locale.substr(0, show.venue.locale.indexOf(','));
