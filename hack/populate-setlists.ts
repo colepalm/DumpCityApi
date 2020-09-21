@@ -10,18 +10,51 @@ const main = async () => {
         const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
 
         for (const show of showsResponse.data) {
-            const id = show.id;
+            const dcShow = await getShow(show.dateTime);
 
-            const setlistResponse = await pt.client.get(`/shows/${id}/setlist`);
-            console.log(setlistResponse.data);
+            const setlistResponse = await pt.client.get(`/shows/${show.id}/setlist`);
 
-            const getSong = gql`
-                query {
-                    
+            for (const song of setlistResponse.data.ShowSongs) {
+                const songId = getSong(song.Song.Name);
+                if (songId) {
+                    createSongInstance()
                 }
-            `
+            }
         }
     }
 };
+
+const getShow = async (id: string) => {
+    const getShowQuery = gql`
+        query { show(id: "${id}") { id } }
+    `
+
+    const res = await dumpCity.client.query({
+        query: getShowQuery
+    });
+    return res.data.id;
+}
+
+const getSong = async (song: string) => {
+    const getSongQuery = gql`
+        query {
+            song(song: { name: "${song}" })
+            { id }
+        }
+    `
+
+    try {
+        let res = await dumpCity.client.query({
+            query: getSongQuery
+        })
+        return res.data.id
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const createSongInstance = async () => {
+
+}
 
 main();

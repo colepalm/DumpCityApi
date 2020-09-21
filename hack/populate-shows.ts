@@ -97,7 +97,7 @@ const createNewShow = async (show: CreateShowInput) => {
     `
 
     try {
-        let res = await dumpCity.client.mutate({
+        const res = await dumpCity.client.mutate({
             mutation: createShow
         })
         console.log(res);
