@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { SongInstance } from './SongInstance';
@@ -14,6 +14,10 @@ export class Set extends BaseEntity {
     @OneToMany(() => SongInstance, songInstance => songInstance.id)
     songsPlayed: SongInstance[];
 
-    @ManyToOne(() => Show, show => show.id)
+    @ManyToOne(
+        () => Show, show => show.setlist,
+        { nullable: false }
+    )
+    @JoinColumn()
     show: Show;
 }

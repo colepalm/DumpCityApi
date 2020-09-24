@@ -13,14 +13,12 @@ export class Song extends BaseEntity {
     @Column({ unique: true })
     name: string;
 
-    @Field(() => Show)
     @ManyToOne(
         () => Show,
         show => show.id
         )
     firstPlayed: Show;
 
-    @Field(() => Show)
     @ManyToOne(
         () => Show,
         show => show.id,

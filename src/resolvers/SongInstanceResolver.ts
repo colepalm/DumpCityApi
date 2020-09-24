@@ -1,9 +1,7 @@
 import { Arg, Mutation, Resolver } from 'type-graphql';
 
-import { SongInstance } from '../models/SongInstance';
-import { CreateSongInstanceInput } from '../inputs/CreateSongInstanceInput';
-import { Show } from '../models/Show';
-import { Song } from '../models/Song';
+import { SongInstance, Show, Song } from '../models';
+import { CreateSongInstanceInput } from '../inputs';
 
 @Resolver()
 export class SongInstanceResolver {

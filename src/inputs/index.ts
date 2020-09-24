@@ -1,4 +1,4 @@
-export * from './CreateShowInput'
+export * from './show/CreateShowInput'
 export * from './CreateSongInput'
 export * from './CreateSongInstanceInput'
 export * from './CreateVenueInput'

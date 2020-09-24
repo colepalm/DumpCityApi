@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Show } from './Show';
@@ -35,4 +35,10 @@ export class Venue extends BaseEntity {
 
     @OneToOne(() => Show, show => show.id)
     lastTime: Show;
+
+    @ManyToOne(
+        _ => Show, show => show.venue,
+        { nullable: true }
+        )
+    shows: Show[]
 }

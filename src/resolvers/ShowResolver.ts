@@ -1,14 +1,21 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
-import { CreateShowInput } from '../inputs/CreateShowInput';
-import { Show } from '../models/Show';
-import { Venue } from '../models/Venue';
+import { CreateShowInput } from '../inputs';
+import { FindShowInput } from '../inputs/show';
+import { Show, Venue } from '../models';
 
 @Resolver()
 export class ShowResolver {
     @Query(() => Show)
-    async show(@Arg('id') id: string) {
-        return Show.findOne({ where: { id } })
+    async show(@Arg('show') show: FindShowInput) {
+        const res = await Show.findOne({
+            where: [
+                { id: show.id },
+                { date: show.date }
+            ],
+        })
+        if (!res) throw new Error("Show not found!");
+        return res;
     }
 
     @Query(() => [Show])

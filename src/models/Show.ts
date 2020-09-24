@@ -1,16 +1,15 @@
 import {
     BaseEntity,
     Column,
-    Entity, JoinColumn,
-    ManyToOne,
-    OneToMany, OneToOne,
+    Entity,
+    JoinColumn,
+    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
 import { Set } from './Set'
-import { Song } from './Song';
 
 @Entity()
 @ObjectType()
@@ -23,14 +22,21 @@ export class Show extends BaseEntity {
     @Column()
     date: string;
 
-    @Field(_ => Venue)
-    @OneToMany(() => Venue, venue => venue.id, { eager: true })
+    @OneToMany(
+        _ => Venue, venue => venue.shows,
+        { eager: true, nullable: true }
+        )
+    @JoinColumn()
     venue: Venue;
 
     @Field(_ => Number)
     @Column({ default: 0 })
     rating: number;
 
-    @OneToMany(_ => Set, set => set.id, { eager: true })
+    @OneToMany(
+        _ => Set, set => set.show,
+        { eager: true, nullable: true }
+        )
+    @JoinColumn()
     setlist: Set[];
 }
