@@ -1,10 +1,11 @@
 import { Field, InputType } from 'type-graphql';
 
-import { SongInstance } from '../models';
-
 @InputType()
 export class CreateSetInput {
-    @Field()
+    @Field(
+        _ => [String],
+        { nullable: true }
+        )
     songsPlayed?: string[];
 
     @Field()
