@@ -1,6 +1,7 @@
 import gql from 'graphql-tag'
-import { CreateVenueInput } from '../src/inputs/CreateVenueInput';
-import { CreateShowInput } from '../src/inputs/show/CreateShowInput';
+
+import { CreateVenueInput } from '../src/inputs';
+import { CreateShowInput } from '../src/inputs/show';
 import { DumpCityService, PtService } from './services';
 
 const VENUE_NOT_FOUND = 'Venue not found!'
@@ -72,6 +73,7 @@ const createNewVenue = async (venue: CreateVenueInput) => {
           }
         }
     `
+
     try {
         let res = await dumpCity.client.mutate({
             mutation: createVenue

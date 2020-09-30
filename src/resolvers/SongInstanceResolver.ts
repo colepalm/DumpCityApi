@@ -1,6 +1,6 @@
 import { Arg, Mutation, Resolver } from 'type-graphql';
 
-import { SongInstance, Show, Song } from '../models';
+import { SongInstance, Set, Song } from '../models';
 import { CreateSongInstanceInput } from '../inputs';
 
 @Resolver()
@@ -10,13 +10,13 @@ export class SongInstanceResolver {
         const song = await Song.findOne({ where: { id: data.song }})
         if (!song) throw new Error("Show not found!");
 
-        const show = await Show.findOne({ where: { id: data.show }})
-        if (!show) throw new Error("Show not found!");
+        const set = await Set.findOne({ where: { id: data.set }})
+        if (!set) throw new Error("Show not found!");
 
         const songInstance = SongInstance.create({
             setNumber: data.setNumber,
             position: data.position,
-            show: show,
+            set: set,
             description: data.description,
             jamChart: data.jamChart ? data.jamChart : false
         });

@@ -12,7 +12,7 @@ export class CreateSongInstanceInput {
     position: number
 
     @Field()
-    show: string
+    set: string
 
     @Field({ nullable: true })
     description?: string
@@ -21,5 +21,5 @@ export class CreateSongInstanceInput {
     jamChart?: boolean
 
     @Field({ nullable: true })
-    segueType: string;
+    segueType?: string;
 }

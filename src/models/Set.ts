@@ -7,15 +7,15 @@ import { Show } from './Show';
 @Entity()
 @ObjectType()
 export class Set extends BaseEntity {
-    @Field(() => ID)
+    @Field(_ => ID)
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToMany(() => SongInstance, songInstance => songInstance.id)
+    @OneToMany(_ => SongInstance, songInstance => songInstance.set)
     songsPlayed: SongInstance[];
 
     @ManyToOne(
-        () => Show, show => show.setlist,
+        _ => Show, show => show.setlist,
         { nullable: false }
     )
     @JoinColumn()

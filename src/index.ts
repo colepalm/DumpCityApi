@@ -4,10 +4,13 @@ import { createConnection } from 'typeorm';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 
-import { ShowResolver } from './resolvers/ShowResolver';
-import { VenueResolver } from './resolvers/VenueResolver';
-import { SongInstanceResolver } from './resolvers/SongInstanceResolver';
-import { SongResolver } from './resolvers/SongResolver';
+import {
+    SetResolver,
+    ShowResolver,
+    SongInstanceResolver,
+    SongResolver,
+    VenueResolver
+} from './resolvers';
 
 async function main() {
     const connection = await createConnection();
@@ -18,7 +21,8 @@ async function main() {
             ShowResolver,
             SongResolver,
             SongInstanceResolver,
-            VenueResolver
+            VenueResolver,
+            SetResolver
         ],
         validate: true
     });

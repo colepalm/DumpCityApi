@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
-import { Show } from './Show';
+import { Set } from './Set';
 import { Song } from './Song';
 
 @Entity()
@@ -22,9 +22,9 @@ export class SongInstance extends BaseEntity {
     @Column({ nullable: false })
     position: number
 
-    @Field(() => Show)
-    @ManyToOne(() => Show, show => show.id, { eager: true })
-    show: Show;
+    @Field(() => Set)
+    @ManyToOne(() => Set, set => set.songsPlayed, { eager: true })
+    set: Set;
 
     @Field(() => String)
     @Column()
