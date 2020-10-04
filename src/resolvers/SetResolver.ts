@@ -1,6 +1,6 @@
 import { Arg, Mutation, Resolver } from 'type-graphql';
 
-import { CreateSetInput } from '../inputs';
+import { CreateSetInput, UpdateSetInput } from '../inputs';
 import { Set, Show, SongInstance } from '../models';
 
 @Resolver()
@@ -13,9 +13,9 @@ export class SetResolver {
         const setlist: SongInstance[] = [];
         if (data.songsPlayed) {
             for (const songInstance of data.songsPlayed) {
-                const instance = await SongInstance.findOne({ where:
-                        { id: songInstance }
-                });
+                const instance = await SongInstance.findOne(
+                    { where: { id: songInstance }}
+                    );
                 if (!instance) throw new Error('Unable to create setlist')
                 setlist.push(instance);
             }
@@ -27,5 +27,23 @@ export class SetResolver {
         })
         await set.save();
         return set;
+    }
+
+    async updateSet(@Arg("id") id: string, @Arg("data") data: UpdateSetInput) {
+        const set = await Set.findOne({ where: { id }});
+        if (!set) throw new Error('Set not found!');
+        const setlist: SongInstance[] = [];
+        for (const song of data.songsPlayed) {
+            const foundSongInstance = await SongInstance.findOne(
+                { where: { id: song } }
+                )
+            if (!foundSongInstance)
+                throw new Error(`Unable to create setlist: ${song}`)
+
+            setlist.push(foundSongInstance);
+        }
+
+        set.songsPlayed = setlist;
+        set.save();
     }
 }

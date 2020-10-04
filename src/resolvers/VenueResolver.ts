@@ -35,7 +35,7 @@ export class VenueResolver {
     @Mutation(() => Venue)
     async updateVenue(@Arg("id") id: string, @Arg("data") data: UpdateVenueInput) {
         const venue = await Venue.findOne({ where: { id } });
-        if (!venue) throw new Error("Venue not found!");
+        if (!venue) throw new Error('Venue not found!');
         venue.timesPlayed = data.addOne ?
             venue.timesPlayed + 1 :
             data.timesPlayed;
@@ -46,7 +46,7 @@ export class VenueResolver {
     @Mutation(() => Boolean)
     async deleteVenue(@Arg('id') id: string) {
         const venue = await Venue.findOne({ where: { id } });
-        if (!venue) throw new Error("Venue not found!");
+        if (!venue) throw new Error('Venue not found!');
         await venue.remove();
         return true;
     }
