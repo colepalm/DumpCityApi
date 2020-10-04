@@ -16,10 +16,6 @@ export class SongInstance extends BaseEntity {
 
     @Field(() => Number)
     @Column({ nullable: false })
-    setNumber: number
-
-    @Field(() => Number)
-    @Column({ nullable: false })
     position: number
 
     @Field(() => Set)
@@ -27,14 +23,14 @@ export class SongInstance extends BaseEntity {
     set: Set;
 
     @Field(() => String)
-    @Column()
+    @Column({ nullable: true })
     description: string
 
     @Field(() => Boolean)
-    @Column()
+    @Column({ nullable: true })
     jamChart: boolean
 
     @Field(() => String)
-    @Column()
+    @Column({ nullable: true })
     segueType: string
 }

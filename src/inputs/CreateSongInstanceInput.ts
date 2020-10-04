@@ -6,9 +6,6 @@ export class CreateSongInstanceInput {
     song: string;
 
     @Field()
-    setNumber: number
-
-    @Field()
     position: number
 
     @Field()

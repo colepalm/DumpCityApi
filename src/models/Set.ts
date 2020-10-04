@@ -20,4 +20,8 @@ export class Set extends BaseEntity {
     )
     @JoinColumn()
     show: Show;
+
+    // TODO: Propagate this through existing sets to not violate constraint
+    @Field(_ => Number, { nullable: false })
+    setNumber: number;
 }

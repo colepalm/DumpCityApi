@@ -29,6 +29,7 @@ export class SetResolver {
         return set;
     }
 
+    @Mutation(() => Set)
     async updateSet(@Arg("id") id: string, @Arg("data") data: UpdateSetInput) {
         const set = await Set.findOne({ where: { id }});
         if (!set) throw new Error('Set not found!');
@@ -44,6 +45,7 @@ export class SetResolver {
         }
 
         set.songsPlayed = setlist;
-        set.save();
+        await set.save();
+        return set;
     }
 }
