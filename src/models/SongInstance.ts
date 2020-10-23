@@ -11,6 +11,7 @@ export class SongInstance extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
+    @Field(() => Song)
     @ManyToOne(() => Song, song => song.id, { eager: true })
     song: Song;
 

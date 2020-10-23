@@ -10,4 +10,7 @@ export class CreateSetInput {
 
     @Field()
     show: string;
+
+    @Field()
+    setNumber: number
 }
