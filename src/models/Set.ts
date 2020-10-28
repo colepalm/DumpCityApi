@@ -11,11 +11,16 @@ export class Set extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToMany(_ => SongInstance, songInstance => songInstance.set)
+    @OneToMany(
+        _ => SongInstance,
+        songInstance => songInstance.set,
+        { eager: true }
+    )
     songsPlayed: SongInstance[];
 
     @ManyToOne(
-        _ => Show, show => show.setlist,
+        _ => Show,
+        show => show.setlist,
         { nullable: false }
     )
     @JoinColumn()

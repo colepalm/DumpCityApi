@@ -1,10 +1,18 @@
-import { Arg, Mutation, Resolver } from 'type-graphql';
+import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
 import { CreateSetInput, UpdateSetInput } from '../inputs';
 import { Set, Show, SongInstance } from '../models';
 
 @Resolver()
 export class SetResolver {
+    @Query(() => Set)
+    async set(@Arg('id') id: string) {
+        const set = await Set.findOne({ where: { id } });
+
+        if (!set) throw new Error('Set not found!');
+        return set;
+    }
+
     @Mutation(() => Set)
     async createSet(@Arg('data') data: CreateSetInput) {
         const show = await Show.findOne({ where: { id: data.show }});
@@ -30,8 +38,8 @@ export class SetResolver {
     }
 
     @Mutation(() => Set)
-    async updateSet(@Arg("id") id: string, @Arg("data") data: UpdateSetInput) {
-        const set = await Set.findOne({ where: { id }});
+    async updateSet(@Arg("data") data: UpdateSetInput) {
+        const set = await Set.findOne({ where: { id: data.id } });
         if (!set) throw new Error('Set not found!');
         const setlist: SongInstance[] = [];
         for (const song of data.songsPlayed) {

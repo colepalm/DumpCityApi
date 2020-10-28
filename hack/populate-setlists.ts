@@ -16,10 +16,11 @@ const main = async () => {
 
             const setlistResponse = await pt.client.get(`/shows/${show.id}/setlist`);
 
-            const songsPlayed = [];
+            let songsPlayed = [];
             const setsCovered = new Set();
-            let currentSetId: string = '';
+            let currentSetId = '';
 
+            // Create setlist
             for (const song of setlistResponse.data.ShowSongs) {
                 if (setsCovered.has(song.SetNumber)) {
                     const songId = await getSong(song.Song.Name);
@@ -27,15 +28,24 @@ const main = async () => {
                         const songInstanceId = await createSongInstance({
                             song: songId,
                             set: currentSetId,
-                            position: song.Song.Position,
-                            segueType: song.Song.Segue ? '>' : '',
+                            position: song.Position,
+                            segueType: song.Segue ? '>' : '',
                         });
                         songsPlayed.push(songInstanceId);
                     }
                 } else {
+                    // Add setlist to set when currentSet is filled
+                    if (currentSetId) {
+                        console.log(songsPlayed);
+                        const setId = await updateSet(currentSetId, songsPlayed);
+                        console.log(setId);
+                        songsPlayed = [];
+                    }
+
                     currentSetId = await createSet(
-                        { show: dcShowId, setNumber: song.SetNumber}
+                        { show: dcShowId, setNumber: song.SetNumber }
                     )
+                    setsCovered.add(song.SetNumber);
                 }
             }
         }
@@ -97,7 +107,12 @@ const createSong = async (name: string) => {
 const createSongInstance = async (songInstance: CreateSongInstanceInput) => {
     const createSongInstanceMutation = gql`
         mutation {
-            createSongInstance(data: "${songInstance}") { id }
+            createSongInstance(data: {
+                song: "${songInstance.song}",
+                position: ${songInstance.position},
+                set: "${songInstance.set}",
+                segueType: "${songInstance.segueType}"
+            }) { id }
         }
     `
     try {
@@ -125,6 +140,26 @@ const createSet = async (set: CreateSetInput) => {
             mutation: createSetMutation
         })
         return res.data.createSet.id
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+const updateSet = async (id: string, songsPlayed: string[]) => {
+    const updateSetMutation = gql`
+        mutation {
+            updateSet(data: {
+                id: "${id}", songsPlayed: ${songsPlayed}
+            }) { id }
+        }
+    `;
+
+    try {
+        let res = await dumpCity.client.mutate({
+            mutation: updateSetMutation
+        })
+        return res.data.updateSet.id
 
     } catch (err) {
         console.log(err)

@@ -23,9 +23,10 @@ export class Show extends BaseEntity {
     date: string;
 
     @OneToMany(
-        _ => Venue, venue => venue.shows,
+        _ => Venue,
+        venue => venue.shows,
         { eager: true, nullable: true }
-        )
+    )
     @JoinColumn()
     venue: Venue;
 
@@ -34,9 +35,10 @@ export class Show extends BaseEntity {
     rating: number;
 
     @OneToMany(
-        _ => Set, set => set.show,
+        _ => Set,
+        set => set.show,
         { eager: true, nullable: true }
-        )
+    )
     @JoinColumn()
     setlist: Set[];
 }

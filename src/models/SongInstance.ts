@@ -20,7 +20,10 @@ export class SongInstance extends BaseEntity {
     position: number
 
     @Field(() => Set)
-    @ManyToOne(() => Set, set => set.songsPlayed, { eager: true })
+    @ManyToOne(
+        () => Set,
+        set => set.songsPlayed
+    )
     set: Set;
 
     @Field(() => String)
