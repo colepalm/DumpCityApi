@@ -147,10 +147,13 @@ const createSet = async (set: CreateSetInput) => {
 }
 
 const updateSet = async (id: string, songsPlayed: string[]) => {
+    let songsString: string = '';
+    songsPlayed.forEach(song => songsString += `${song}`);
     const updateSetMutation = gql`
         mutation {
             updateSet(data: {
-                id: "${id}", songsPlayed: ${songsPlayed}
+                id: "${id}",
+                songsPlayed: ${songsString}
             }) { id }
         }
     `;

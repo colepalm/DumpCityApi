@@ -19,11 +19,11 @@ export class Set extends BaseEntity {
     songsPlayed: SongInstance[];
 
     @ManyToOne(
-        _ => Show,
+        type => Show,
         show => show.setlist,
-        { nullable: false }
+        { eager: true, nullable: false }
     )
-    @JoinColumn()
+    @Field(type => Show)
     show: Show;
 
     // TODO: Propagate this through existing sets to not violate constraint

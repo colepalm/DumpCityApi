@@ -35,10 +35,10 @@ export class Show extends BaseEntity {
     rating: number;
 
     @OneToMany(
-        _ => Set,
+        type => Set,
         set => set.show,
-        { eager: true, nullable: true }
+        { nullable: true }
     )
-    @JoinColumn()
-    setlist: Set[];
+    @Field(type => Set)
+    setlist: Set;
 }
