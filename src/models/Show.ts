@@ -39,6 +39,9 @@ export class Show extends BaseEntity {
         set => set.show,
         { nullable: true }
     )
-    @Field(type => Set)
-    setlist: Set;
+    @Field(
+        type => [Set],
+        { nullable: true  }
+    )
+    setlist: Set[];
 }

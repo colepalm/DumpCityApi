@@ -1,7 +1,8 @@
 import gql from 'graphql-tag';
 
-import { CreateSetInput, CreateShowInput, CreateSongInstanceInput } from '../src/inputs';
+import { CreateSetInput, CreateSongInstanceInput } from '../src/inputs';
 import { DumpCityService, PtService } from './services';
+import { UpdateSetlistInput } from '../src/inputs/show/UpdateSetlistInput';
 
 const pt = new PtService();
 const dumpCity = new DumpCityService();
@@ -19,6 +20,7 @@ const main = async () => {
             let songsPlayed = [];
             const setsCovered = new Set();
             let currentSetId = '';
+            let sets: string[] = [];
 
             // Create setlist
             for (const song of setlistResponse.data.ShowSongs) {
@@ -36,22 +38,24 @@ const main = async () => {
                 } else {
                     // Add setlist to set when currentSet is filled
                     if (currentSetId) {
-                        console.log(songsPlayed);
                         const setId = await updateSet(currentSetId, songsPlayed);
-                        console.log(setId);
                         songsPlayed = [];
                     }
 
                     currentSetId = await createSet(
                         { show: dcShowId, setNumber: song.SetNumber }
-                    )
+                    );
+                    sets.push(currentSetId);
                     setsCovered.add(song.SetNumber);
                 }
             }
+
+            updateSetlist({ id: dcShowId, setlist: sets })
         }
     }
 };
 
+// ASYNC GQL FUNCTIONS
 const getShow = async (date: string) => {
     const getShowQuery = gql`
         query {
@@ -147,13 +151,12 @@ const createSet = async (set: CreateSetInput) => {
 }
 
 const updateSet = async (id: string, songsPlayed: string[]) => {
-    let songsString: string = '';
-    songsPlayed.forEach(song => songsString += `${song}`);
+    const songsString: string = createStringArray(songsPlayed);
     const updateSetMutation = gql`
         mutation {
             updateSet(data: {
                 id: "${id}",
-                songsPlayed: ${songsString}
+                songsPlayed: [${songsString}]
             }) { id }
         }
     `;
@@ -167,6 +170,40 @@ const updateSet = async (id: string, songsPlayed: string[]) => {
     } catch (err) {
         console.log(err)
     }
-}
+};
+
+const updateSetlist = async (updatedShow: UpdateSetlistInput) => {
+    const setsString: string = createStringArray(updatedShow.setlist);
+
+    const updateSetlistMutation = gql`
+        mutation {
+            updateSetlist(data: {
+                id: "${updatedShow.id}",
+                setlist: [${setsString}]
+            }) { id }
+        }
+      `;
+
+    try {
+        let res = await dumpCity.client.mutate({
+            mutation: updateSetlistMutation
+        })
+        return res.data.updateSetlist.id
+
+    } catch (err) {
+        console.log(err)
+    }
+};
+
+// UTILS
+const createStringArray = (arr: any[]): string => {
+    let stringArray: string = '';
+    arr.forEach((song: string, index: number, array: string[]) => {
+        index === array.length - 1 ?
+            stringArray += `"${song}"` :
+            stringArray += `"${song}", `;
+    });
+    return stringArray;
+};
 
 main();
