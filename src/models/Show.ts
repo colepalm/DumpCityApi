@@ -18,8 +18,8 @@ export class Show extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field(_ => String)
     @Column()
+    @Field(_ => String)
     date: string;
 
     @OneToMany(
@@ -27,7 +27,7 @@ export class Show extends BaseEntity {
         venue => venue.shows,
         { eager: true, nullable: true }
     )
-    @JoinColumn()
+    @Field(type => Venue)
     venue: Venue;
 
     @Field(_ => Number)

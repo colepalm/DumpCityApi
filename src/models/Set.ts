@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
+import { BaseEntity, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, JoinColumn, Column } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { SongInstance } from './SongInstance';
@@ -16,6 +16,7 @@ export class Set extends BaseEntity {
         songInstance => songInstance.set,
         { eager: true }
     )
+    @Field(type => [SongInstance])
     songsPlayed: SongInstance[];
 
     @ManyToOne(
