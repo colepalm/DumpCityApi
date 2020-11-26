@@ -1,8 +1,7 @@
 import {
     BaseEntity,
     Column,
-    Entity,
-    JoinColumn,
+    Entity, JoinColumn, ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -10,38 +9,36 @@ import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
 import { Set } from './Set'
+import { Lazy } from '../interface';
 
 @Entity()
 @ObjectType()
 export class Show extends BaseEntity {
-    @Field(_ => ID)
+    @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    @Field(_ => String)
+    @Field(type => String)
+    @Column({ type: 'varchar' })
     date: string;
 
-    @OneToMany(
-        _ => Venue,
-        venue => venue.shows,
-        { eager: true, nullable: true }
-    )
     @Field(type => Venue)
-    venue: Venue;
+    @ManyToOne(type => Venue, { lazy: true })
+    @JoinColumn()
+    venue: Lazy<Venue>;
 
     @Field(_ => Number)
-    @Column({ default: 0 })
+    @Column({ type: 'int', default: 0 })
     rating: number;
 
-    @OneToMany(
-        type => Set,
-        set => set.show,
-        { nullable: true }
-    )
     @Field(
         type => [Set],
         { nullable: true  }
     )
-    setlist: Set[];
+    @OneToMany(
+        type => Set,
+        set => set.show,
+        { lazy: true, cascade: ['insert'], nullable: true }
+    )
+    setlist: Lazy<Set[]>;
 }

@@ -1,7 +1,15 @@
-import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    Entity, JoinColumn,
+    OneToMany,
+    OneToOne,
+    PrimaryGeneratedColumn
+} from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Show } from './Show';
+import { Lazy } from '../interface';
 
 @Entity()
 @ObjectType()
@@ -10,35 +18,39 @@ export class Venue extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field(() => String)
-    @Column()
+    @Field(type => String)
+    @Column({ type: 'varchar' })
     name: string;
 
-    @Field(() => String)
-    @Column()
+    @Field(type => String)
+    @Column({ type: 'varchar' })
     city: string;
 
-    @Field(() => String)
-    @Column()
+    @Field(type => String)
+    @Column({ type: 'varchar' })
     state: string;
 
-    @Field(() => String)
-    @Column()
+    @Field(type => String)
+    @Column({ type: 'varchar' })
     country: string;
 
-    @Field(() => Number)
-    @Column({ default: 0 })
+    @Field(type => Number)
+    @Column({ type: 'int', default: 0 })
     timesPlayed: number;
 
-    @OneToOne(() => Show, show => show.id)
-    firstTime: Show;
+    @Field(type => Show)
+    @OneToOne(type => Show, { lazy: true })
+    firstTime: Lazy<Show>;
 
-    @OneToOne(() => Show, show => show.id)
-    lastTime: Show;
+    @Field(type => Show)
+    @OneToOne(type => Show, { lazy: true })
+    lastTime: Lazy<Show>;
 
-    @ManyToOne(
-        _ => Show, show => show.venue,
-        { nullable: true }
+    @Field(type => [Show])
+    @OneToMany(
+        type => Show,
+        show => show.venue,
+        { lazy: true, cascade: ['insert'] }
         )
-    shows: Show[]
+    shows: Lazy<Show[]>
 }

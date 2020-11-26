@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, JoinColumn, Column } from 'typeorm';
+import { BaseEntity, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { SongInstance } from './SongInstance';

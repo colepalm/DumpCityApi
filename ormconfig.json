@@ -5,7 +5,8 @@
   "username": "postgres",
   "password": "TakeADump!",
   "database": "dumpcity",
-  "synchronize": false,
+  "schema": "dumpcity",
+  "synchronize": true,
   "logging": false,
   "entities": [
     "src/models/**/*.ts"
