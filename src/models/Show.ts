@@ -22,19 +22,14 @@ export class Show extends BaseEntity {
     @Column({ type: 'varchar' })
     date: string;
 
-    @Field(type => Venue)
     @ManyToOne(type => Venue, { lazy: true })
-    @JoinColumn()
     venue: Lazy<Venue>;
 
     @Field(_ => Number)
     @Column({ type: 'int', default: 0 })
     rating: number;
 
-    @Field(
-        type => [Set],
-        { nullable: true  }
-    )
+    @Field(type => [Set], { nullable: true  })
     @OneToMany(
         type => Set,
         set => set.show,

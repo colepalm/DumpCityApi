@@ -1,7 +1,7 @@
 import {
     BaseEntity,
     Column,
-    Entity, JoinColumn,
+    Entity,
     OneToMany,
     OneToOne,
     PrimaryGeneratedColumn
@@ -38,13 +38,13 @@ export class Venue extends BaseEntity {
     @Column({ type: 'int', default: 0 })
     timesPlayed: number;
 
-    @Field(type => Show)
-    @OneToOne(type => Show, { lazy: true })
-    firstTime: Lazy<Show>;
-
-    @Field(type => Show)
-    @OneToOne(type => Show, { lazy: true })
-    lastTime: Lazy<Show>;
+    // @Field(type => Show)
+    // @OneToOne(type => Show, { lazy: true })
+    // firstTime: Lazy<Show>;
+    //
+    // @Field(type => Show)
+    // @OneToOne(type => Show, { lazy: true })
+    // lastTime: Lazy<Show>;
 
     @Field(type => [Show])
     @OneToMany(
