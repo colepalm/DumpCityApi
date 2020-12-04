@@ -1,7 +1,6 @@
 import gql from 'graphql-tag'
 
-import { CreateVenueInput } from '../src/inputs';
-import { CreateShowInput } from '../src/inputs/show';
+import { CreateShowInput, CreateVenueInput } from '../src/inputs';
 import { DumpCityService, PtService } from './services';
 
 const VENUE_NOT_FOUND = 'Venue not found!'
