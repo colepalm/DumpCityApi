@@ -10,27 +10,20 @@ export class Song extends BaseEntity {
     id: number
 
     @Field(() => String)
-    @Column({ unique: true })
+    @Column({ unique: true, type: 'varchar' })
     name: string;
 
-    @ManyToOne(
-        () => Show,
-        show => show.id
-        )
+    @ManyToOne(() => Show, { nullable: true })
     firstPlayed: Show;
 
-    @ManyToOne(
-        () => Show,
-        show => show.id,
-        )
-    @JoinColumn()
+    @ManyToOne(() => Show, { nullable: true })
     lastPlayed: Show;
 
     @Field(() => Number)
-    @Column({ nullable: true })
+    @Column({ type: 'int', nullable: true })
     currentGap: number;
 
     @Field(() => Number)
-    @Column()
+    @Column({ type: 'int' })
     timesPlayed: number;
 }

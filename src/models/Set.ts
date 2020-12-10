@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 
 import { SongInstance } from './SongInstance';
 import { Show } from './Show';
+import { Lazy } from '../interface';
 
 @Entity()
 @ObjectType()
@@ -11,23 +12,18 @@ export class Set extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Field(type => [SongInstance], { nullable: true })
     @OneToMany(
         _ => SongInstance,
         songInstance => songInstance.set,
-        { eager: true }
+        { lazy: true, cascade: ['insert'], nullable: true }
     )
-    @Field(type => [SongInstance])
-    songsPlayed: SongInstance[];
+    songsPlayed: Lazy<SongInstance[]>;
 
-    @ManyToOne(
-        type => Show,
-        show => show.setlist,
-        { eager: true, nullable: false }
-    )
-    @Field(type => Show)
-    show: Show;
+    @ManyToOne(type => Show, { nullable: false })
+    show: Lazy<Show>;
 
-    // TODO: Propagate this through existing sets to not violate constraint
-    @Field(_ => Number, { nullable: false })
+    @Field(_ => Number)
+    @Column({ type: 'int', nullable: true })
     setNumber: number;
 }

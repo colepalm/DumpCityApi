@@ -10,6 +10,9 @@ export class SongInstanceResolver {
         const song = await Song.findOne({ where: { id: data.song }})
         if (!song) throw new Error("Song not found!");
 
+        song.timesPlayed++;
+        await song.save();
+
         const set = await Set.findOne({ where: { id: data.set }})
         if (!set) throw new Error("Set not found!");
 

@@ -21,9 +21,7 @@ export class SetResolver {
         const setlist: SongInstance[] = [];
         if (data.songsPlayed) {
             for (const songInstance of data.songsPlayed) {
-                const instance = await SongInstance.findOne(
-                    { where: { id: songInstance }}
-                    );
+                const instance = await SongInstance.findOne(songInstance);
                 if (!instance) throw new Error('Unable to create setlist')
                 setlist.push(instance);
             }
@@ -31,7 +29,8 @@ export class SetResolver {
 
         const set = Set.create({
             show: show,
-            songsPlayed: setlist
+            songsPlayed: setlist,
+            setNumber: data.setNumber
         })
         await set.save();
         return set;

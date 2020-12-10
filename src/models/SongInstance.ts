@@ -11,30 +11,25 @@ export class SongInstance extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Field(() => Song)
-    @ManyToOne(() => Song, song => song.id, { eager: true })
+    @ManyToOne(() => Song)
     song: Song;
 
     @Field(() => Number)
-    @Column({ nullable: false })
+    @Column({ type: 'int', nullable: false })
     position: number
 
-    @Field(() => Set)
-    @ManyToOne(
-        () => Set,
-        set => set.songsPlayed
-    )
+    @ManyToOne(() => Set)
     set: Set;
 
     @Field(() => String)
-    @Column({ nullable: true })
+    @Column({ type: 'varchar', nullable: true })
     description: string
 
     @Field(() => Boolean)
-    @Column({ nullable: true })
+    @Column({ type: 'bool', nullable: true })
     jamChart: boolean
 
     @Field(() => String)
-    @Column({ nullable: true })
+    @Column({ type: 'varchar', nullable: true })
     segueType: string
 }
