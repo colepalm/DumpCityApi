@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Set } from './Set';
 import { Song } from './Song';
+import { Lazy } from '../interface';
 
 @Entity()
 @ObjectType()
@@ -11,8 +12,8 @@ export class SongInstance extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Song)
-    song: Song;
+    @ManyToOne(() => Song, { nullable: true })
+    song: Lazy<Song>;
 
     @Field(() => Number)
     @Column({ type: 'int', nullable: false })

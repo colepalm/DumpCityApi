@@ -22,7 +22,7 @@ export class SongResolver {
         const song = Song.create({
             name: data.name,
         });
-        song.timesPlayed = 0;
+        song.timesPlayed = [];
 
         await song.save();
         return song;
