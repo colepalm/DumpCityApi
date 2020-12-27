@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 import { Show } from './Show';
 import { SongInstance } from './SongInstance';
@@ -14,9 +14,11 @@ export class Song extends BaseEntity {
     @Column({ unique: true, type: 'varchar' })
     name: string;
 
+    @Field(type => Show)
     @ManyToOne(() => Show, { nullable: true })
     firstPlayed: Show;
 
+    @Field(type => Show)
     @ManyToOne(() => Show, { nullable: true })
     lastPlayed: Show;
 

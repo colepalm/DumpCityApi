@@ -22,6 +22,7 @@ export class Show extends BaseEntity {
     @Column({ type: 'varchar' })
     date: string;
 
+    @Field(type => Venue)
     @ManyToOne(type => Venue, { lazy: true })
     venue: Lazy<Venue>;
 

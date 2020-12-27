@@ -9,49 +9,47 @@ const dumpCity = new DumpCityService();
 
 const main = async () => {
     let index = 26;
-    while(index > 0) {
-        const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
+    const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
 
-        for (const show of showsResponse.data) {
-            const dcShowId = await getShow(show.dateTime);
+    for (const show of showsResponse.data) {
+        const dcShowId = await getShow(show.dateTime);
 
-            const setlistResponse = await pt.client.get(`/shows/${show.id}/setlist`);
+        const setlistResponse = await pt.client.get(`/shows/${show.id}/setlist`);
 
-            let songsPlayed = [];
-            const setsCovered = new Set();
-            let currentSetId = '';
-            let sets: string[] = [];
+        let songsPlayed = [];
+        const setsCovered = new Set();
+        let currentSetId = '';
+        let sets: string[] = [];
 
-            // Create setlist
-            for (const song of setlistResponse.data.ShowSongs) {
-                if (setsCovered.has(song.SetNumber)) {
-                    const songId = await getSong(song.Song.Name);
-                    if (songId) {
-                        const songInstanceId = await createSongInstance({
-                            song: songId,
-                            set: currentSetId,
-                            position: song.Position,
-                            segueType: song.Segue ? '>' : '',
-                        });
-                        songsPlayed.push(songInstanceId);
-                    }
-                } else {
-                    // Add setlist to set when currentSet is filled
-                    if (currentSetId) {
-                        const setId = await updateSet(currentSetId, songsPlayed);
-                        songsPlayed = [];
-                    }
-
-                    currentSetId = await createSet(
-                        { show: dcShowId, setNumber: song.SetNumber }
-                    );
-                    sets.push(currentSetId);
-                    setsCovered.add(song.SetNumber);
+        // Create setlist
+        for (const song of setlistResponse.data.ShowSongs) {
+            if (setsCovered.has(song.SetNumber)) {
+                const songId = await getSong(song.Song.Name);
+                if (songId) {
+                    const songInstanceId = await createSongInstance({
+                        song: songId,
+                        set: currentSetId,
+                        position: song.Position,
+                        segueType: song.Segue ? '>' : '',
+                    });
+                    songsPlayed.push(songInstanceId);
                 }
-            }
+            } else {
+                // Add setlist to set when currentSet is filled
+                if (currentSetId) {
+                    const setId = await updateSet(currentSetId, songsPlayed);
+                    songsPlayed = [];
+                }
 
-            updateSetlist({ id: dcShowId, setlist: sets })
+                currentSetId = await createSet(
+                    { show: dcShowId, setNumber: song.SetNumber }
+                );
+                sets.push(currentSetId);
+                setsCovered.add(song.SetNumber);
+            }
         }
+
+        updateSetlist({ id: dcShowId, setlist: sets })
     }
 };
 

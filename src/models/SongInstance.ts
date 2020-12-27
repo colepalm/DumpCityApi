@@ -12,13 +12,15 @@ export class SongInstance extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => Song, { nullable: true })
+    @Field(type => Song)
+    @ManyToOne(type => Song, { lazy: true, nullable: true })
     song: Lazy<Song>;
 
     @Field(() => Number)
     @Column({ type: 'int', nullable: false })
     position: number
 
+    @Field(type => Set)
     @ManyToOne(() => Set)
     set: Set;
 
