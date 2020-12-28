@@ -21,7 +21,7 @@ export class Set extends BaseEntity {
     songsPlayed: Lazy<SongInstance[]>;
 
     @Field(type => Show)
-    @ManyToOne(type => Show, { nullable: false })
+    @ManyToOne(type => Show, { nullable: true, lazy: true })
     show: Lazy<Show>;
 
     @Field(_ => Number)

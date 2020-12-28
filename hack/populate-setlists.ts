@@ -23,29 +23,29 @@ const main = async () => {
 
         // Create setlist
         for (const song of setlistResponse.data.ShowSongs) {
-            if (setsCovered.has(song.SetNumber)) {
-                const songId = await getSong(song.Song.Name);
-                if (songId) {
-                    const songInstanceId = await createSongInstance({
-                        song: songId,
-                        set: currentSetId,
-                        position: song.Position,
-                        segueType: song.Segue ? '>' : '',
-                    });
-                    songsPlayed.push(songInstanceId);
-                }
-            } else {
-                // Add setlist to set when currentSet is filled
-                if (currentSetId) {
-                    const setId = await updateSet(currentSetId, songsPlayed);
-                    songsPlayed = [];
-                }
-
+            if (!setsCovered.has(song.SetNumber)) {
                 currentSetId = await createSet(
                     { show: dcShowId, setNumber: song.SetNumber }
                 );
-                sets.push(currentSetId);
+                console.log(currentSetId, 'currentSetId');
                 setsCovered.add(song.SetNumber);
+            }
+
+            const songId = await getSong(song.Song.Name);
+            if (songId) {
+                const songInstanceId = await createSongInstance({
+                    song: songId,
+                    set: currentSetId,
+                    position: song.Position,
+                    segueType: song.Segue ? '>' : '',
+                });
+                songsPlayed.push(songInstanceId);
+            }
+
+            if (setsCovered.size !== sets.length) {
+                console.log(await updateSet(currentSetId, songsPlayed));
+                sets.push(currentSetId);
+                songsPlayed = [];
             }
         }
 

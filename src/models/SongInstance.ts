@@ -21,8 +21,8 @@ export class SongInstance extends BaseEntity {
     position: number
 
     @Field(type => Set)
-    @ManyToOne(() => Set)
-    set: Set;
+    @ManyToOne(() => Set, { lazy: true })
+    set: Lazy<Set>;
 
     @Field(() => String)
     @Column({ type: 'varchar', nullable: true })

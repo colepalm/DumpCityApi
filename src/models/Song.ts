@@ -1,7 +1,9 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
+
 import { Show } from './Show';
 import { SongInstance } from './SongInstance';
+import { Lazy } from '../interface';
 
 @Entity()
 @ObjectType()
@@ -15,12 +17,12 @@ export class Song extends BaseEntity {
     name: string;
 
     @Field(type => Show)
-    @ManyToOne(() => Show, { nullable: true })
-    firstPlayed: Show;
+    @ManyToOne(() => Show, { nullable: true, lazy: true })
+    firstPlayed: Lazy<Show>;
 
     @Field(type => Show)
-    @ManyToOne(() => Show, { nullable: true })
-    lastPlayed: Show;
+    @ManyToOne(() => Show, { nullable: true, lazy: true })
+    lastPlayed: Lazy<Show>;
 
     @Field(() => Number)
     @Column({ type: 'int', nullable: true })
