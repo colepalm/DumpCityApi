@@ -1,11 +1,10 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Repository } from 'typeorm';
 
-import { CreateShowInput } from '../inputs';
-import { FindShowInput } from '../inputs/show';
+import { CreateShowInput, FindShowInput } from '../inputs';
 import { Show, Set, Venue } from '../models';
 import { UpdateSetlistInput } from '../inputs/show/UpdateSetlistInput';
-import { Repository } from 'typeorm';
 
 @Resolver()
 export class ShowResolver {
@@ -28,7 +27,10 @@ export class ShowResolver {
 
     @Query(() => [Show])
     shows() {
-        return Show.find()
+        return Show.find({
+            take: 10,
+            order: { date: 'ASC' }
+        })
     }
 
     @Mutation(() => Show)
