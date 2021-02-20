@@ -16,15 +16,15 @@ export class Song extends BaseEntity {
     @Column({ unique: true, type: 'varchar' })
     name: string;
 
-    @Field(type => Show)
+    @Field(type => Show, { nullable: true })
     @ManyToOne(() => Show, { nullable: true, lazy: true })
     firstPlayed: Lazy<Show>;
 
-    @Field(type => Show)
+    @Field(type => Show, { nullable: true })
     @ManyToOne(() => Show, { nullable: true, lazy: true })
     lastPlayed: Lazy<Show>;
 
-    @Field(() => Number)
+    @Field(() => Number, { nullable: true })
     @Column({ type: 'int', nullable: true })
     currentGap: number;
 
