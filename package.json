@@ -4,7 +4,7 @@
   "description": "GraphQL server for DumpCity",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon -w src --ext ts --exec ts-node src/index.ts",
+    "start": "nodemon -w src --ext ts --exec ts-node local-deployment.ts",
     "populate-setlists": "ts-node hack/populate-setlists.ts",
     "populate-shows": "ts-node hack/populate-shows.ts"
   },
@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "apollo-server": "^2.14.2",
+    "apollo-server-cloud-functions": "^2.21.1",
     "class-validator": "^0.12.2",
     "graphql": "^15.0.0",
     "pg": "^8.2.1",

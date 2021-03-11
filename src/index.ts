@@ -1,10 +1,7 @@
-import 'reflect-metadata';
-
 import { createConnection } from 'typeorm';
-import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
-import * as TypeORM from "typeorm";
+import { ApolloServer } from 'apollo-server';
 
 import {
     SetResolver,
@@ -14,10 +11,7 @@ import {
     VenueResolver
 } from './resolvers';
 
-
-TypeORM.useContainer(Container);
-
-async function main() {
+export async function createApolloServer(): Promise<ApolloServer> {
     const connection = await createConnection();
     connection.synchronize();
 
@@ -32,9 +26,10 @@ async function main() {
         ],
         validate: true
     });
-    const server = new ApolloServer({ schema });
-    await server.listen(4000);
-    console.log('Server has started at port 4000!');
+
+    return new ApolloServer({
+        cors: { origin: '*' },
+        schema
+    });
 }
 
-main();
