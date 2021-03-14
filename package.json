@@ -20,7 +20,8 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.10.2",
     "type-graphql": "^1.0.0-rc.2",
-    "typeorm": "^0.2.25"
+    "typeorm": "^0.2.25",
+    "typescript": "^3.9.3"
   },
   "devDependencies": {
     "@apollo/client": "^3.0.2",
@@ -31,7 +32,6 @@
     "graphql-tag": "^2.11.0",
     "nodemon": "^2.0.4",
     "typedi": "^0.8.0",
-    "typeorm-typedi-extensions": "^0.2.3",
-    "typescript": "^3.9.3"
+    "typeorm-typedi-extensions": "^0.2.3"
   }
 }
