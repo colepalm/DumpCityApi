@@ -4,7 +4,8 @@
   "description": "GraphQL server for DumpCity",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon -w src --ext ts --exec ts-node local-deployment.ts",
+    "prod": "ts-node deploy.ts",
+    "local": "nodemon -w src --ext ts --exec ts-node deploy.ts",
     "populate-setlists": "ts-node hack/populate-setlists.ts",
     "populate-shows": "ts-node hack/populate-shows.ts"
   },
