@@ -2,9 +2,10 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 
-import { CreateShowInput, FindShowInput } from '../inputs';
+import { CreateShowInput, FindShowInput, PaginationInput } from '../inputs';
 import { Show, Set, Venue } from '../models';
 import { UpdateSetlistInput } from '../inputs/show/UpdateSetlistInput';
+import { IsNotEmpty } from 'class-validator';
 
 @Resolver()
 export class ShowResolver {
@@ -26,10 +27,17 @@ export class ShowResolver {
     }
 
     @Query(() => [Show])
-    shows() {
+    shows(
+        @Arg("Pagination", { nullable: true })
+            pagination?: PaginationInput
+    ) {
         return Show.find({
-            take: 10,
-            order: { date: 'ASC' }
+            take: pagination?.take || 10,
+            order: { date: 'DESC' },
+            skip: pagination?.skip || 0,
+            where: [
+                { setlist: IsNotEmpty() }
+            ]
         })
     }
 
