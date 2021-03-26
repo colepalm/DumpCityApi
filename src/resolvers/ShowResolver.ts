@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { CreateShowInput, FindShowInput, PaginationInput } from '../inputs';
 import { Show, Set, Venue } from '../models';
 import { UpdateSetlistInput } from '../inputs/show/UpdateSetlistInput';
-import { IsNotEmpty } from 'class-validator';
 
 @Resolver()
 export class ShowResolver {
@@ -28,16 +27,14 @@ export class ShowResolver {
 
     @Query(() => [Show])
     shows(
-        @Arg("Pagination", { nullable: true })
+        @Arg("pagination", { nullable: true })
             pagination?: PaginationInput
     ) {
+        // TODO: Figure out how to filter out shows without setlists
         return Show.find({
             take: pagination?.take || 10,
             order: { date: 'DESC' },
             skip: pagination?.skip || 0,
-            where: [
-                { setlist: IsNotEmpty() }
-            ]
         })
     }
 
