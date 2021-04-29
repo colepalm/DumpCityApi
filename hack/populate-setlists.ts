@@ -8,7 +8,7 @@ const pt = new PtService();
 const dumpCity = new DumpCityService();
 
 const main = async () => {
-    let index = 22;
+    let index = 9;
     const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
 
     for (const show of showsResponse.data) {
@@ -27,7 +27,6 @@ const main = async () => {
                 currentSetId = await createSet(
                     { show: dcShowId, setNumber: song.SetNumber }
                 );
-                console.log(currentSetId, 'currentSetId');
                 setsCovered.add(song.SetNumber);
             }
 
@@ -43,7 +42,8 @@ const main = async () => {
             }
 
             if (setsCovered.size !== sets.length) {
-                console.log(await updateSet(currentSetId, songsPlayed));
+                console.log('\x1b[45m', '\n\n***UPDATED SET***')
+                console.log('Set ID: ', await updateSet(currentSetId, songsPlayed));
                 sets.push(currentSetId);
                 songsPlayed = [];
             }
@@ -65,6 +65,9 @@ const getShow = async (date: string) => {
         const res = await dumpCity.client.query({
             query: getShowQuery
         });
+        console.log('\x1b[43m', '\n\n***SHOW FOUND***')
+        console.log('Show ID:' , res.data.show.id)
+        console.log('Show Date:' , date)
         return res.data.show.id;
     } catch (err) {
         console.log(err);
@@ -90,19 +93,26 @@ const getSong = async (name: string) => {
 }
 
 const createSong = async (name: string) => {
-    const createSongMutation = gql`
-        mutation {
-            createSong(data: { name: "${name}" }) { id }
-        }
-    `
+    if (name.indexOf('"') >= 0) {
+        console.log('\x1b[46m', '\n\n***SONG NOT CREATED***')
+        console.log('Song name: ', name)
+    } else {
+        const createSongMutation = gql`
+            mutation {
+                createSong(data: { name: "${name}" }) { id }
+            }
+        `
 
-    try {
-        let res = await dumpCity.client.mutate({
-            mutation: createSongMutation
-        })
-        console.log(res.data.createSong)
-    } catch (err) {
-        console.log(err);
+        try {
+            let res = await dumpCity.client.mutate({
+                mutation: createSongMutation
+            })
+            console.log('\x1b[46m', '\n\n***NEW SONG***')
+            console.log('Song ID: ', res.data.createSong)
+            console.log('Song name: ', name)
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 
