@@ -8,7 +8,7 @@ const pt = new PtService();
 const dumpCity = new DumpCityService();
 
 const main = async () => {
-    let index = 9;
+    let index = 5;
     const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
 
     for (const show of showsResponse.data) {
@@ -30,7 +30,7 @@ const main = async () => {
                 setsCovered.add(song.SetNumber);
             }
 
-            const songId = await getSong(song.Song.Name);
+            const songId = await getSong(song.Song.Name.replace(/["]+/g, ''));
             if (songId) {
                 const songInstanceId = await createSongInstance({
                     song: songId,
