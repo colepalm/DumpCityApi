@@ -32,7 +32,5 @@ export class SongResolver {
     async updateSong(@Arg('data') data: UpdateSongInput) {
         const song = Song.findOne({ where: { id: data.id }})
         if (!song) throw new Error("Song not found!");
-
-
     }
 }
