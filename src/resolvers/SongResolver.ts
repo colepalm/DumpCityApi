@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
-import { Song } from '../models';
+import { Set, Song } from '../models';
 import { CreateSongInput, UpdateSongInput } from '../inputs';
 import { FindSongInput } from '../inputs/FindSongInput';
 
@@ -13,6 +13,12 @@ export class SongResolver {
             await Song.findOne({ where: { name: song.name } });
 
         if (!found) throw new Error('Song not found!');
+
+        found.timesPlayed.reduce((a, b) => {
+            const set = await Set.findOne({ where: { id: a.set } } );
+            return set ? new Date(set.show.date) : 0;
+        });
+
         return found;
     }
 

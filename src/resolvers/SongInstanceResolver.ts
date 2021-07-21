@@ -23,7 +23,6 @@ export class SongInstanceResolver {
         });
         await songInstance.save();
 
-        console.log(await song.timesPlayed);
         (await song.timesPlayed).push(songInstance);
         await song.save();
 
