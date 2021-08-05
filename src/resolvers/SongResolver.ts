@@ -14,11 +14,6 @@ export class SongResolver {
 
         if (!found) throw new Error('Song not found!');
 
-        found.timesPlayed.reduce((a, b) => {
-            const set = await Set.findOne({ where: { id: a.set } } );
-            return set ? new Date(set.show.date) : 0;
-        });
-
         return found;
     }
 
