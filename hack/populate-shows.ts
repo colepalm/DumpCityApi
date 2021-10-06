@@ -9,7 +9,7 @@ const pt = new PtService();
 const dumpCity = new DumpCityService();
 
 const main = async () => {
-    let index = 26;
+    let index = 27;
     while(index > 0) {
         const response = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`)
 
@@ -32,7 +32,7 @@ const main = async () => {
                 });
                 if (res.data.venue.id) {
                     await createNewShow({
-                        date: show.dateTime,
+                        date: new Date(show.dateTime).toDateString(),
                         venue: res.data.venue.id
                     })
                 }

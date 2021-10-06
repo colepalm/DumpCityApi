@@ -8,48 +8,51 @@ const pt = new PtService();
 const dumpCity = new DumpCityService();
 
 const main = async () => {
-    let index = 1;
-    const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
+    let index = 21;
+    while(index > 0) {
+        const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
 
-    for (const show of showsResponse.data) {
-        const dcShowId = await getShow(show.dateTime);
+        for (const show of showsResponse.data) {
+            const dcShowId = await getShow(show.dateTime);
 
-        const setlistResponse = await pt.client.get(`/shows/${show.id}/setlist`);
+            const setlistResponse = await pt.client.get(`/shows/${show.id}/setlist`);
 
-        let songsPlayed = [];
-        const setsCovered = new Set();
-        let currentSetId = '';
-        let sets: string[] = [];
+            let songsPlayed = [];
+            const setsCovered = new Set();
+            let currentSetId = '';
+            let sets: string[] = [];
 
-        // Create setlist
-        for (const song of setlistResponse.data.ShowSongs) {
-            if (!setsCovered.has(song.SetNumber)) {
-                currentSetId = await createSet(
-                    { show: dcShowId, setNumber: song.SetNumber }
-                );
-                setsCovered.add(song.SetNumber);
+            // Create setlist
+            for (const song of setlistResponse.data.ShowSongs) {
+                if (!setsCovered.has(song.SetNumber)) {
+                    currentSetId = await createSet(
+                        {show: dcShowId, setNumber: song.SetNumber}
+                    );
+                    setsCovered.add(song.SetNumber);
+                }
+
+                const songId = await getSong(song.Song.Name.replace(/["]+/g, ''));
+                if (songId) {
+                    const songInstanceId = await createSongInstance({
+                        song: songId,
+                        set: currentSetId,
+                        position: song.Position,
+                        segueType: song.Segue ? '>' : '',
+                    });
+                    songsPlayed.push(songInstanceId);
+                }
+
+                if (setsCovered.size !== sets.length) {
+                    console.log('\x1b[45m', '\n\n***UPDATED SET***')
+                    console.log('Set ID: ', await updateSet(currentSetId, songsPlayed));
+                    sets.push(currentSetId);
+                    songsPlayed = [];
+                }
             }
 
-            const songId = await getSong(song.Song.Name.replace(/["]+/g, ''));
-            if (songId) {
-                const songInstanceId = await createSongInstance({
-                    song: songId,
-                    set: currentSetId,
-                    position: song.Position,
-                    segueType: song.Segue ? '>' : '',
-                });
-                songsPlayed.push(songInstanceId);
-            }
-
-            if (setsCovered.size !== sets.length) {
-                console.log('\x1b[45m', '\n\n***UPDATED SET***')
-                console.log('Set ID: ', await updateSet(currentSetId, songsPlayed));
-                sets.push(currentSetId);
-                songsPlayed = [];
-            }
+            updateSetlist({id: dcShowId, setlist: sets})
         }
-
-        updateSetlist({ id: dcShowId, setlist: sets })
+        index = index - 1;
     }
 };
 

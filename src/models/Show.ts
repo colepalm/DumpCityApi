@@ -1,7 +1,8 @@
 import {
     BaseEntity,
     Column,
-    Entity, JoinColumn, ManyToOne,
+    Entity,
+    ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -18,8 +19,8 @@ export class Show extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field(type => String)
-    @Column({ type: 'varchar' })
+    @Field(type => Date)
+    @Column({ type: 'date', nullable: true })
     date: string;
 
     @Field(type => Venue)
