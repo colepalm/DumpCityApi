@@ -11,6 +11,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import { Venue } from './Venue';
 import { Set } from './Set'
 import { Lazy } from '../interface';
+import { DateScalar } from '../scalars/DateScalar';
 
 @Entity()
 @ObjectType()
@@ -19,9 +20,9 @@ export class Show extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Field(type => Date)
+    @Field(type => DateScalar)
     @Column({ type: 'date', nullable: true })
-    date: string;
+    date: Date;
 
     @Field(type => Venue)
     @ManyToOne(type => Venue, { lazy: true })

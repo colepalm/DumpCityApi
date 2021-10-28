@@ -3,7 +3,7 @@ import { Field, InputType } from 'type-graphql';
 @InputType()
 export class CreateShowInput {
     @Field()
-    date: string
+    date: Date
 
     @Field()
     venue: string

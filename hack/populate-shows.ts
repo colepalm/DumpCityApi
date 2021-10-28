@@ -32,7 +32,7 @@ const main = async () => {
                 });
                 if (res.data.venue.id) {
                     await createNewShow({
-                        date: new Date(show.dateTime).toDateString(),
+                        date: new Date(show.dateTime),
                         venue: res.data.venue.id
                     })
                 }

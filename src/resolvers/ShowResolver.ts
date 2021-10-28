@@ -26,7 +26,7 @@ export class ShowResolver {
     }
 
     @Query(() => [Show])
-    shows(
+    async shows(
         @Arg("pagination", { nullable: true })
             pagination?: PaginationInput
     ) {
