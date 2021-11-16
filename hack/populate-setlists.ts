@@ -8,7 +8,7 @@ const pt = new PtService();
 const dumpCity = new DumpCityService();
 
 const main = async () => {
-    let index = 17;
+    let index = 27;
     while(index > 0) {
         const showsResponse = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`);
 
@@ -38,7 +38,7 @@ const main = async () => {
                         set: currentSetId,
                         position: song.Position,
                         segueType: song.Segue ? '>' : '',
-                    });
+                    }, song.Song.Name.replace(/["]+/g, ''));
                     songsPlayed.push(songInstanceId);
                 }
 
@@ -58,9 +58,10 @@ const main = async () => {
 
 // ASYNC GQL FUNCTIONS
 const getShow = async (date: string) => {
+    const dateString = date.substr(0,10);
     const getShowQuery = gql`
         query {
-            show(show: { date: "${date}" }) { id } 
+            show(show: { date: "${dateString}" }) { id } 
         }
     `
 
@@ -119,7 +120,7 @@ const createSong = async (name: string) => {
     }
 }
 
-const createSongInstance = async (songInstance: CreateSongInstanceInput) => {
+const createSongInstance = async (songInstance: CreateSongInstanceInput, name: string) => {
     const createSongInstanceMutation = gql`
         mutation {
             createSongInstance(data: {
@@ -134,6 +135,9 @@ const createSongInstance = async (songInstance: CreateSongInstanceInput) => {
         let res = await dumpCity.client.mutate({
             mutation: createSongInstanceMutation
         })
+        console.log('\x1b[46m', '\n\n***NEW SONG INSTANCE***')
+        console.log('Song Instance ID: ', res.data.createSongInstance.id)
+        console.log('Song: ', name)
         return res.data.createSongInstance.id
 
     } catch (err) {

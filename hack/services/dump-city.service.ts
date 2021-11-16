@@ -1,4 +1,4 @@
-import { ApolloClient, createHttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, createHttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
 import axios from 'axios';
 
 const { buildAxiosFetch } = require("@lifeomic/axios-fetch");
