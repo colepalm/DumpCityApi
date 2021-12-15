@@ -9,7 +9,7 @@ const pt = new PtService();
 const dumpCity = new DumpCityService();
 
 const main = async () => {
-    let index = 19; // start here next time
+    let index = 19;
     while(index > 0) {
         const response = await pt.client.get(`/bands/9/shows?pageSize=100&page=${index}`)
 
