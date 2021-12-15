@@ -7,7 +7,8 @@
     "prod": "ts-node deploy.ts",
     "local": "nodemon -w src --ext ts --exec ts-node deploy.ts",
     "populate-setlists": "ts-node hack/populate-setlists.ts",
-    "populate-shows": "ts-node hack/populate-shows.ts"
+    "populate-shows": "ts-node hack/populate-shows.ts",
+    "generate-schema": "ts-node hack/generate-schema.ts"
   },
   "author": "Cole Palm",
   "license": "MIT",

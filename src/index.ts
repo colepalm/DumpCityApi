@@ -2,7 +2,6 @@ import { createConnection } from 'typeorm';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server';
-import { GraphQLScalarType, Kind } from 'graphql';
 
 import {
     SetResolver,
