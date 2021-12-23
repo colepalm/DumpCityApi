@@ -34,5 +34,5 @@ export class Song extends BaseEntity {
         instance => instance.song,
         { lazy: true, cascade: ['insert'], nullable: true }
     )
-    timesPlayed: SongInstance[];
+    timesPlayed: Lazy<SongInstance[]>;
 }

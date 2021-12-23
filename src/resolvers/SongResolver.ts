@@ -1,6 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
-import { Set, Show, Song, SongInstance } from '../models';
+import { Show, Song, SongInstance } from '../models';
 import { CreateSongInput, UpdateSongInput } from '../inputs';
 import { FindSongInput } from '../inputs/FindSongInput';
 
@@ -13,6 +13,18 @@ export class SongResolver {
             await Song.findOne({ where: { name: song.name } });
 
         if (!found) throw new Error('Song not found!');
+
+        // TODO: Instead of using this appraoch, create getter and update
+        //  functions to execute the tasks I am using below
+        // const timesPlayed = await found.timesPlayed;
+        // const set = await timesPlayed[30].set;
+        // let show: Show | undefined = await Show.findOne({
+        //     where: { id: 7493 }
+        // })
+        // if (!show)
+        //     throw new Error(`Unable to create setlist: ${song}`)
+        // set.show = show;
+        // await set.save();
 
         // Adding last played to song record
         await this.findLastPlayed(await found.timesPlayed, found);
