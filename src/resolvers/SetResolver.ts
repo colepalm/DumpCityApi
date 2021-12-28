@@ -37,7 +37,7 @@ export class SetResolver {
     }
 
     @Mutation(() => Set)
-    async updateSet(@Arg("data") data: UpdateSetInput) {
+    async updateSetSongsPlayed(@Arg("data") data: UpdateSetInput) {
         const set = await Set.findOne({ where: { id: data.id } });
         if (!set) throw new Error('Set not found!');
         const setlist: SongInstance[] = [];
@@ -52,6 +52,19 @@ export class SetResolver {
         }
 
         set.songsPlayed = setlist;
+        await set.save();
+        return set;
+    }
+
+    @Mutation(() => Set)
+    async updateSetShow(@Arg("data") data: UpdateSetInput) {
+        const set = await Set.findOne({ where: { id: data.id } });
+        if (!set) throw new Error('Set not found!');
+
+        const show = await Show.findOne({ where: { id: data.show }})
+        if (!show) throw new Error('Show not found!');
+
+        set.show = show;
         await set.save();
         return set;
     }

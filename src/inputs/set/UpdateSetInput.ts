@@ -7,7 +7,10 @@ export class UpdateSetInput{
 
     @Field(
         _ => [String],
-        { nullable: false }
+        { nullable: true }
     )
     songsPlayed: string[];
+
+    @Field({ nullable: true })
+    show: string
 }

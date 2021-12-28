@@ -14,18 +14,6 @@ export class SongResolver {
 
         if (!found) throw new Error('Song not found!');
 
-        // TODO: Instead of using this appraoch, create getter and update
-        //  functions to execute the tasks I am using below
-        // const timesPlayed = await found.timesPlayed;
-        // const set = await timesPlayed[30].set;
-        // let show: Show | undefined = await Show.findOne({
-        //     where: { id: 7493 }
-        // })
-        // if (!show)
-        //     throw new Error(`Unable to create setlist: ${song}`)
-        // set.show = show;
-        // await set.save();
-
         // Adding last played to song record
         await this.findLastPlayed(await found.timesPlayed, found);
         const lastPlayed = await found.lastPlayed
@@ -63,7 +51,7 @@ export class SongResolver {
 
     @Mutation(() => Song)
     async updateSong(@Arg('data') data: UpdateSongInput) {
-        const song = Song.findOne({ where: { id: data.id }})
+        const song = Song.findOne({ where: { id: data.id } })
         if (!song) throw new Error("Song not found!");
     }
 
