@@ -1,11 +1,17 @@
 {
   "type": "postgres",
-  "host": "dumpcity.cgcxjdbkcs48.us-east-2.rds.amazonaws.com",
+  "host": "ec2-44-194-54-186.compute-1.amazonaws.com",
   "port": 5432,
-  "username": "postgres",
-  "password": "TakeADump!",
-  "database": "dumpcity",
+  "username": "cigyexiijubsze",
+  "password": "5d48077063d92d2c7d90a2babfda86e1c34260a95783827b8242d8f836e9c3c8",
+  "database": "dbo89ttmshhh7q",
   "schema": "dumpcity",
+  "ssl": true,
+  "extra": {
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  },
   "synchronize": true,
   "logging": false,
   "entities": [
