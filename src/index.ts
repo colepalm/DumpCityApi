@@ -2,7 +2,6 @@ import { createConnection } from 'typeorm';
 import { buildSchema } from 'type-graphql';
 import { Container } from 'typedi';
 import { ApolloServer } from 'apollo-server';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 import {
     SetResolver,
@@ -11,6 +10,7 @@ import {
     SongResolver,
     VenueResolver
 } from './resolvers';
+import { UserResolver } from './resolvers/user/UserResolver';
 
 export async function createApolloServer(): Promise<ApolloServer> {
 
@@ -24,7 +24,8 @@ export async function createApolloServer(): Promise<ApolloServer> {
             SongResolver,
             SongInstanceResolver,
             VenueResolver,
-            SetResolver
+            SetResolver,
+            UserResolver
         ],
         dateScalarMode: 'isoDate',
         validate: true
