@@ -33,7 +33,7 @@ export async function createApolloServer(): Promise<ApolloServer> {
 
     return new ApolloServer({
         cors: {
-            origin: ["https://dump-city.web.app/"]
+            origin: ["https://dump-city.web.app"]
         },
         schema
     });
