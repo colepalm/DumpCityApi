@@ -4,4 +4,7 @@ import { Field, InputType } from 'type-graphql';
 export class CreateUserInput {
     @Field()
     username: string;
+
+    @Field()
+    email: string;
 }

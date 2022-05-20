@@ -11,4 +11,8 @@ export class User extends BaseEntity {
     @Field(() => String)
     @Column({ type: 'varchar', nullable: false })
     username: string;
+
+    @Field(() => ID)
+    @Column({ type: 'varchar', nullable: false })
+    email: string;
 }
