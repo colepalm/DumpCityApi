@@ -13,6 +13,6 @@ export class User extends BaseEntity {
     username: string;
 
     @Field(() => ID)
-    @Column({ type: 'varchar', nullable: false })
+    @Column({ type: 'varchar', nullable: false, default: "temp@email.com" })
     email: string;
 }
