@@ -7,7 +7,10 @@ import { CreateUserInput } from '../../inputs/user/UserInput';
 export class UserResolver {
     @Mutation(() => User)
     async createUser(@Arg('user') userInput: CreateUserInput) {
-         const user = User.create({ email: userInput.email });
+         const user = User.create({
+             email: userInput.email,
+             username: userInput.email
+         });
          await user.save();
          return user;
     }

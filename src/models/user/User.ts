@@ -9,10 +9,18 @@ export class User extends BaseEntity {
     id: number
 
     @Field(() => String)
-    @Column({ type: 'varchar', nullable: false })
+    @Column({
+        type: 'varchar',
+        nullable: false,
+        unique: true
+    })
     username: string;
 
     @Field(() => ID)
-    @Column({ type: 'varchar', nullable: false, default: "temp@email.com" })
+    @Column({
+        type: 'varchar',
+        nullable: false,
+        unique: true
+    })
     email: string;
 }
