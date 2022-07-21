@@ -7,7 +7,7 @@ import { CreateThreadInput } from '../../inputs/forum/CreateThreadInput';
 @Resolver()
 export class ThreadResolver {
     @Mutation(() => Thread)
-    async createThread(@Arg('post') threadInput: CreateThreadInput) {
+    async createThread(@Arg('thread') threadInput: CreateThreadInput) {
         const user = await User.findOne({ where: { id: threadInput.user }})
         if (!user) throw new Error("User not found!");
 

@@ -11,6 +11,7 @@ import {
     VenueResolver
 } from './resolvers';
 import { UserResolver } from './resolvers/user/UserResolver';
+import { PostResolver, ThreadResolver } from './resolvers/forum';
 
 export async function createApolloServer(): Promise<ApolloServer> {
 
@@ -20,12 +21,14 @@ export async function createApolloServer(): Promise<ApolloServer> {
     const schema = await buildSchema({
         container: Container,
         resolvers: [
+            PostResolver,
             ShowResolver,
             SongResolver,
             SongInstanceResolver,
-            VenueResolver,
             SetResolver,
-            UserResolver
+            ThreadResolver,
+            UserResolver,
+            VenueResolver,
         ],
         dateScalarMode: 'isoDate',
         validate: true
