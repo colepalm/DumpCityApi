@@ -30,4 +30,7 @@ export class Thread extends BaseEntity {
         { lazy: true, nullable: true }
     )
     posts: Lazy<Post[]>;
+
+    @Field(() => String)
+    title: string;
 }

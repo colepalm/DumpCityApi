@@ -20,7 +20,7 @@ export class PostResolver {
             thread: thread,
             body: postInput.body
         });
-        
+
         await post.save();
         return post;
     }
