@@ -27,7 +27,7 @@ export class Thread extends BaseEntity {
     @OneToMany(
         type => Post,
         instance => instance.thread,
-        { lazy: true, cascade: ['insert'], nullable: true }
+        { lazy: true, nullable: true }
     )
     posts: Lazy<Post[]>;
 }
