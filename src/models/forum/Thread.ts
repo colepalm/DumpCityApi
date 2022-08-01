@@ -30,9 +30,9 @@ export class Thread extends BaseEntity {
     )
     user: Lazy<User>;
 
-    @Field(() => String)
+    @Field(type => [Post], { nullable: true })
     @OneToMany(
-        type => Post,
+        _ => Post,
         instance => instance.thread,
         { lazy: true, nullable: true }
     )
