@@ -1,5 +1,5 @@
 import {
-    BaseEntity,
+    BaseEntity, Column,
     CreateDateColumn,
     Entity,
     ManyToOne,
@@ -38,6 +38,7 @@ export class Thread extends BaseEntity {
     )
     posts: Lazy<Post[]>;
 
-    @Field(() => String)
+    @Field(() => String, { nullable: false })
+    @Column({ type: 'varchar', nullable: false, default: 'DEFAULT' })
     title: string;
 }

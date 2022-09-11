@@ -1,4 +1,4 @@
-import { BaseEntity, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { User } from '../user/User';
@@ -31,5 +31,6 @@ export class Post extends BaseEntity {
     thread: Lazy<Thread>;
 
     @Field(() => String)
+    @Column({ type: 'varchar', nullable: false, default: 'DEFAULT' })
     body: string;
 }
