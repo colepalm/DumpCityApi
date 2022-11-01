@@ -23,7 +23,7 @@ export class Post extends BaseEntity {
     )
     user: Lazy<User>;
 
-    @Field(type => User, { nullable: false })
+    @Field(type => Thread, { nullable: false })
     @ManyToOne(
         type => Thread,
         { nullable: false, lazy: true }
