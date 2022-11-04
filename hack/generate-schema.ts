@@ -4,7 +4,6 @@ import { printSchema } from 'graphql';
 import { writeFile } from 'fs';
 import 'reflect-metadata';
 
-
 import { SetResolver, ShowResolver, SongInstanceResolver, SongResolver, VenueResolver } from '../src/resolvers';
 import { ThreadResolver } from '../src/resolvers/forum';
 
