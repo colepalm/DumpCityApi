@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Post } from '../../models/forum';
 import { User } from '../../models/user/User';
 import { CreatePostInput } from '../../inputs/forum/CreatePostInput';
+import { PaginationInput } from '../../inputs';
 
 @Resolver()
 export class PostResolver {
@@ -38,10 +39,15 @@ export class PostResolver {
     }
 
     @Query(() => [Post])
-    async posts() {
-        const post = await this.postRepository.find()
-        if (!post) throw new Error("Post not found!")
-        return post;
+    async posts(
+        @Arg("pagination", { nullable: true })
+            pagination?: PaginationInput
+    ) {
+        return await Post.find({
+            take: pagination?.take || 10,
+            order: { createdDate: 'DESC' },
+            skip: pagination?.skip || 0,
+        });
     }
 
     @Query(() => [Post])
@@ -52,7 +58,7 @@ export class PostResolver {
         if (!user) throw new Error("User not found!")
 
         return await this.postRepository.find(
-            {where: { user }}
+            { where: { user }}
         );
     }
 }

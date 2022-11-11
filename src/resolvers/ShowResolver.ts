@@ -31,7 +31,7 @@ export class ShowResolver {
             pagination?: PaginationInput
     ) {
         // TODO: Figure out how to filter out shows without setlists
-        return Show.find({
+        return await Show.find({
             take: pagination?.take || 10,
             order: { date: 'DESC' },
             skip: pagination?.skip || 0,
