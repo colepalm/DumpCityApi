@@ -1,9 +1,8 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { User } from '../user/User';
 import { Lazy } from '../../interface';
-import { Thread } from './Thread';
 
 @Entity()
 @ObjectType()
@@ -11,6 +10,13 @@ export class Post extends BaseEntity {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Field(() => Post, { nullable: true })
+    @ManyToOne(
+        type => Post,
+        { nullable: true, lazy: true }
+    )
+    parent: Lazy<Post>;
 
     @Field(() => Date)
     @CreateDateColumn()
@@ -23,12 +29,13 @@ export class Post extends BaseEntity {
     )
     user: Lazy<User>;
 
-    @Field(type => Thread, { nullable: false })
-    @ManyToOne(
-        type => Thread,
-        { nullable: false, lazy: true }
+    @Field(type => [Post], { nullable: true })
+    @OneToMany(
+        _ => Post,
+        instance => instance.parent,
+        { lazy: true, nullable: true }
     )
-    thread: Lazy<Thread>;
+    comments: Lazy<Post[]>;
 
     @Field(() => String)
     @Column({ type: 'varchar', nullable: false, default: 'DEFAULT' })

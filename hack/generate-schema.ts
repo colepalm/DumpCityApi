@@ -5,17 +5,17 @@ import { writeFile } from 'fs';
 import 'reflect-metadata';
 
 import { SetResolver, ShowResolver, SongInstanceResolver, SongResolver, VenueResolver } from '../src/resolvers';
-import { ThreadResolver } from '../src/resolvers/forum';
+import { PostResolver } from '../src/resolvers/forum';
 
 async function createSchema() {
     return await buildSchema({
         container: Container,
         resolvers: [
+            PostResolver,
             SetResolver,
             ShowResolver,
             SongResolver,
             SongInstanceResolver,
-            ThreadResolver,
             VenueResolver,
         ],
         dateScalarMode: 'isoDate',

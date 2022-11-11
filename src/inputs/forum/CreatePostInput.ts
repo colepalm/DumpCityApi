@@ -6,8 +6,5 @@ export class CreatePostInput {
     user: string;
 
     @Field({ nullable: false })
-    thread: string;
-
-    @Field({ nullable: false })
     body: string;
 }

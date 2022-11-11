@@ -11,7 +11,7 @@ import {
     VenueResolver
 } from './resolvers';
 import { UserResolver } from './resolvers/user/UserResolver';
-import { PostResolver, ThreadResolver } from './resolvers/forum';
+import { PostResolver } from './resolvers/forum';
 
 export async function createApolloServer(): Promise<ApolloServer> {
 
@@ -26,7 +26,6 @@ export async function createApolloServer(): Promise<ApolloServer> {
             SongResolver,
             SongInstanceResolver,
             SetResolver,
-            ThreadResolver,
             UserResolver,
             VenueResolver,
         ],
