@@ -10,8 +10,9 @@ TypeORM.useContainer(Container);
 async function main() {
     const server = await createApolloServer()
 
-    await server.listen({ port: process.env.PORT || 4000 });
-    console.log('Server has started at port 4000!');
+    const port = { port: process.env.PORT || 4000 };
+    await server.listen(port);
+    console.log(`Server has started at port ${port.port}!`);
 }
 
 main();

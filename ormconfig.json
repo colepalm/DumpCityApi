@@ -15,7 +15,7 @@
   "synchronize": true,
   "logging": false,
   "entities": [
-    "src/models/**/*.ts"
+    "src/models/*.*"
   ],
   "migrations": [
     "src/migration/**/*.ts"
