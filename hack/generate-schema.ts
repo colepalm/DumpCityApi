@@ -26,7 +26,7 @@ async function createSchema() {
 (async () => {
     const schema = await createSchema();
     const sdl = printSchema(schema);
-    await writeFile(__dirname + '/../../DumpCity/schema.graphql', sdl, (err) => {
+    await writeFile(__dirname + '/../../DumpCity/schema/schema.graphql', sdl, (err) => {
         if (err)
             console.log(err);
         else {
