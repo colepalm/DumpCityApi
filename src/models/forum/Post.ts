@@ -40,4 +40,8 @@ export class Post extends BaseEntity {
     @Field(() => String)
     @Column({ type: 'varchar', nullable: false, default: 'DEFAULT' })
     body: string;
+
+    @Field(() => Number)
+    @Column({ type: 'int', default: 0 })
+    likes: number;
 }
