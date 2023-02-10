@@ -4,8 +4,9 @@ import { Repository } from 'typeorm';
 
 import { Post } from '../../models/forum';
 import { User } from '../../models/user/User';
-import { CreatePostInput } from '../../inputs/forum/CreatePostInput';
+import { CreatePostInput } from '../../inputs/forum';
 import { PaginationInput } from '../../inputs';
+import { ToggleLikeInput } from '../../inputs/forum/ToggleLikeInput';
 
 @Resolver()
 export class PostResolver {
@@ -60,5 +61,17 @@ export class PostResolver {
         return await this.postRepository.find(
             { where: { user }}
         );
+    }
+
+    @Mutation(() => Post)
+    async toggleLike(@Arg('data') data: ToggleLikeInput) {
+        const post = await this.postRepository.findOne(
+            { where: { id: data.post } }
+        )
+        if (!post) throw new Error(`Post ${data.post} not found`)
+
+        data.isLiked ? post.likes++ : post.likes--;
+        await post.save();
+        return post;
     }
 }
