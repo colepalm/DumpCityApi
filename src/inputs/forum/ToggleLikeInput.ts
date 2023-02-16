@@ -7,4 +7,7 @@ export class ToggleLikeInput {
 
     @Field({ nullable: false })
     isLiked: boolean;
+
+    @Field({ nullable: false})
+    user: string;
 }

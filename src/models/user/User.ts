@@ -1,5 +1,7 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
+
+import { Post } from '../forum';
 
 @Entity()
 @ObjectType()
@@ -16,11 +18,19 @@ export class User extends BaseEntity {
     })
     username: string;
 
-    @Field(() => ID)
+    @Field(() => String)
     @Column({
         type: 'varchar',
         nullable: false,
         unique: true
     })
     email: string;
+
+    @Field(() => [Post])
+    @ManyToMany(
+        type => Post,
+        post => post.likers,
+        { lazy: true, cascade: ['insert'], nullable: true }
+    )
+    likes: [Post];
 }

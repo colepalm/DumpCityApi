@@ -70,7 +70,17 @@ export class PostResolver {
         )
         if (!post) throw new Error(`Post ${data.post} not found`)
 
-        data.isLiked ? post.likes++ : post.likes--;
+        const user = await this.userRepository.findOne(
+            { where: { id: data.user }}
+        )
+        if (!user) throw new Error(`User ${data.user} not found`)
+
+        if (data.isLiked) {
+            post.likers.push(user);
+        } else {
+            const index = post.likers.indexOf(user)
+            post.likers.splice(index, 1);
+        }
         await post.save();
         return post;
     }
