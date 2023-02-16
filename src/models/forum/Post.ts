@@ -3,6 +3,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinTable,
     ManyToMany,
     ManyToOne,
     OneToMany,
@@ -56,5 +57,6 @@ export class Post extends BaseEntity {
         user => user.likes,
         { lazy: true, nullable: true }
     )
+    @JoinTable()
     likers: [User]
 }
