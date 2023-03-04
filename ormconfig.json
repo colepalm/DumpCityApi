@@ -1,10 +1,8 @@
 {
   "type": "postgres",
-  "host": "ec2-44-194-54-186.compute-1.amazonaws.com",
-  "port": 5432,
-  "username": "cigyexiijubsze",
-  "password": "5d48077063d92d2c7d90a2babfda86e1c34260a95783827b8242d8f836e9c3c8",
-  "database": "dbo89ttmshhh7q",
+  "host": "dump-city-api-db.fly.dev",
+  "username": "postgres",
+  "password": "ViTA6axEHwsnBHb",
   "schema": "dumpcity",
   "ssl": true,
   "extra": {
