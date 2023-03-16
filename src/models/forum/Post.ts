@@ -58,5 +58,5 @@ export class Post extends BaseEntity {
         { lazy: true, nullable: true }
     )
     @JoinTable()
-    likers: [User]
+    likers: Lazy<User[]>
 }

@@ -2,6 +2,7 @@ import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColu
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Post } from '../forum';
+import { Lazy } from '../../interface';
 
 @Entity()
 @ObjectType()
@@ -30,7 +31,8 @@ export class User extends BaseEntity {
     @ManyToMany(
         type => Post,
         post => post.likers,
-        { lazy: true, cascade: ['insert'], nullable: true }
+        { lazy: true,  nullable: true }
     )
-    likes: [Post];
+    @JoinTable()
+    likes: Lazy<Post[]>;
 }

@@ -76,14 +76,14 @@ export class PostResolver {
         if (!user) throw new Error(`User ${data.user} not found`)
 
         if (data.isLiked) {
-            if (post.likers) {
-                post.likers.push(user);
+            if (await post.likers) {
+                (await post.likers).push(user);
             } else {
                 post.likers = [user];
             }
         } else {
-            const index = post.likers.indexOf(user)
-            post.likers.splice(index, 1);
+            const index = (await post.likers).indexOf(user);
+            (await post.likers).splice(index, 1);
         }
 
         await post.save();

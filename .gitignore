@@ -15,3 +15,4 @@ benchmarkDist
 npm
 .idea
 .env
+.DS_Store
