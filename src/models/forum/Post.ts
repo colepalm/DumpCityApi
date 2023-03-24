@@ -54,7 +54,6 @@ export class Post extends BaseEntity {
     @Field(() => [User])
     @ManyToMany(
         type => User,
-        user => user.likes,
         { lazy: true, nullable: true }
     )
     @JoinTable()
