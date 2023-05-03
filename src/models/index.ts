@@ -1,5 +1,0 @@
-export * from './show/Set'
-export * from './show/Show'
-export * from './show/Song'
-export * from './show/SongInstance'
-export * from './show/Venue'

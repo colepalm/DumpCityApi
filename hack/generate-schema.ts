@@ -4,7 +4,7 @@ import { printSchema } from 'graphql';
 import { writeFile } from 'fs';
 import 'reflect-metadata';
 
-import { SetResolver, ShowResolver, SongInstanceResolver, SongResolver, VenueResolver } from '../src/resolvers';
+import { SetResolver, ShowResolver, SongInstanceResolver, SongResolver, VenueResolver } from '../src/resolvers/show';
 import { PostResolver } from '../src/resolvers/forum';
 
 async function createSchema() {

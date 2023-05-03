@@ -11,7 +11,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import { Venue } from './Venue';
 import { Set } from './Set'
 import { Lazy } from '../../interface';
-import { User } from '../user/User';
+import { User } from '../user';
 
 @Entity()
 @ObjectType()
@@ -44,6 +44,6 @@ export class Show extends BaseEntity {
     @ManyToOne(
         _ => User,
         user => user.myShows,
-        { lazy: true })
+        { lazy: true, nullable: true })
     attendees: Lazy<User>;
 }

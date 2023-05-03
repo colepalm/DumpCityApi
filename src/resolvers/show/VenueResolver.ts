@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
-import { CreateVenueInput, FindVenueInput, UpdateVenueInput } from '../inputs';
-import { Venue } from '../models';
+import { Venue } from '../../models/show';
+import { CreateVenueInput, FindVenueInput, UpdateVenueInput } from '../../inputs/show';
 
 @Resolver()
 export class VenueResolver {

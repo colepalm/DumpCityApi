@@ -2,9 +2,9 @@ import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 
-import { CreateShowInput, FindShowInput, PaginationInput } from '../inputs';
-import { Show, Set, Venue } from '../models';
-import { UpdateSetlistInput } from '../inputs/show/UpdateSetlistInput';
+import { Show, Set, Venue } from '../../models/show';
+import { CreateShowInput, FindShowInput, UpdateSetlistInput } from '../../inputs/show';
+import { PaginationInput } from '../../inputs';
 
 @Resolver()
 export class ShowResolver {

@@ -3,7 +3,8 @@ import {
     Column,
     Entity,
     JoinTable,
-    ManyToMany, OneToMany,
+    ManyToMany,
+    OneToMany,
     PrimaryGeneratedColumn
 } from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
@@ -46,7 +47,8 @@ export class User extends BaseEntity {
     @Field(() => [Show])
     @OneToMany(
         _ => Show,
-        show => show.attendees
+        show => show.attendees,
+        { lazy: true, nullable: true }
     )
     myShows: Lazy<Show[]>
 }

@@ -9,7 +9,7 @@ import {
     SongInstanceResolver,
     SongResolver,
     VenueResolver
-} from './resolvers';
+} from './resolvers/show';
 import { UserResolver } from './resolvers/user/UserResolver';
 import { PostResolver } from './resolvers/forum';
 

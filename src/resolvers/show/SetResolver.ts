@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Resolver } from 'type-graphql';
 
-import { CreateSetInput, UpdateSetInput } from '../inputs';
-import { Set, Show, SongInstance } from '../models';
+import { Set, Show, SongInstance } from '../../models/show';
+import { CreateSetInput, UpdateSetInput } from '../../inputs/set';
 
 @Resolver()
 export class SetResolver {
