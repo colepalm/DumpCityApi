@@ -11,6 +11,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import { Venue } from './Venue';
 import { Set } from './Set'
 import { Lazy } from '../../interface';
+import { User } from '../user/User';
 
 @Entity()
 @ObjectType()
@@ -38,4 +39,11 @@ export class Show extends BaseEntity {
         { lazy: true, cascade: ['insert'], nullable: true }
     )
     setlist: Lazy<Set[]>;
+
+    @Field(_ => User)
+    @ManyToOne(
+        _ => User,
+        user => user.myShows,
+        { lazy: true })
+    attendees: Lazy<User>;
 }

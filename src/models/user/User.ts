@@ -1,8 +1,16 @@
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BaseEntity,
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany, OneToMany,
+    PrimaryGeneratedColumn
+} from 'typeorm';
 import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Post } from '../forum';
 import { Lazy } from '../../interface';
+import { Show } from '../show';
 
 @Entity()
 @ObjectType()
@@ -34,4 +42,11 @@ export class User extends BaseEntity {
     )
     @JoinTable()
     likes: Lazy<Post[]>;
+
+    @Field(() => [Show])
+    @OneToMany(
+        _ => Show,
+        show => show.attendees
+    )
+    myShows: Lazy<Show[]>
 }
