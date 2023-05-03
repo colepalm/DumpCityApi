@@ -10,7 +10,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Venue } from './Venue';
 import { Set } from './Set'
-import { Lazy } from '../interface';
+import { Lazy } from '../../interface';
 
 @Entity()
 @ObjectType()

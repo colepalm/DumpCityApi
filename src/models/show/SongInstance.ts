@@ -3,7 +3,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 
 import { Set } from './Set';
 import { Song } from './Song';
-import { Lazy } from '../interface';
+import { Lazy } from '../../interface';
 
 @Entity()
 @ObjectType()
