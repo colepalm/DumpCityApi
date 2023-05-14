@@ -45,5 +45,5 @@ export class Show extends BaseEntity {
         _ => User,
         user => user.myShows,
         { lazy: true, nullable: true })
-    attendees: Lazy<User>;
+    attendees: Lazy<User[]>;
 }

@@ -3,14 +3,21 @@ import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Repository } from 'typeorm';
 
 import { Show, Set, Venue } from '../../models/show';
-import { CreateShowInput, FindShowInput, UpdateSetlistInput } from '../../inputs/show';
+import { User } from '../../models/user';
+import {
+    CreateShowInput,
+    FindShowInput,
+    UpdateAttendeeInput,
+    UpdateSetlistInput
+} from '../../inputs/show';
 import { PaginationInput } from '../../inputs';
 
 @Resolver()
 export class ShowResolver {
     constructor(
         @InjectRepository(Show) private readonly showRepository: Repository<Show>,
-        @InjectRepository(Venue) private readonly venueRepository: Repository<Venue>
+        @InjectRepository(Venue) private readonly venueRepository: Repository<Venue>,
+        @InjectRepository(User) private readonly userRepository: Repository<User>,
     ) { }
 
     @Query(() => Show)
@@ -52,7 +59,7 @@ export class ShowResolver {
 
     @Mutation(() => Show)
     async updateSetlist(@Arg('data') data: UpdateSetlistInput) {
-        const show = await Show.findOne({ where: { id: data.id } });
+        const show = await this.showRepository.findOne({ where: { id: data.id } });
         if (!show) throw new Error("Show not found!");
 
         const setlist: Set[] = []
@@ -67,5 +74,27 @@ export class ShowResolver {
         show.setlist = setlist;
         await show.save();
         return show;
+    }
+
+    @Mutation(() => Show)
+    async updateAttendees(@Arg('data') data: UpdateAttendeeInput) {
+        const user = await this.userRepository.findOne({ where: { id: data.user } })
+        const show = await this.showRepository.findOne({ where: { id: data.show } })
+
+        if (!user) throw new Error("User not found!");
+        if (!show) throw new Error("Show not found!");
+
+        const attendees = await show.attendees
+        if (attendees.filter(u => u.id === user.id).length === 0) {
+            (await show.attendees).push(user)
+            console.log(`Adding user to attendees ${user.id}, show ${show.id}`)
+        } else {
+            const index = attendees.indexOf(user);
+            (await show.attendees).splice(index, 1);
+            console.log(`Removing user from attendees ${user.id}, show ${show.id}`)
+        }
+
+        await show.save();
+        console.log(`Saved attendee toggle user ${user.id}, show ${show.id}`)
     }
 }

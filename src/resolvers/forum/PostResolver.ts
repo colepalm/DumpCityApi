@@ -78,7 +78,7 @@ export class PostResolver {
         if (data.isLiked) {
             let likers: User[] = await post.likers
             if (likers) {
-                if (likers.filter(user => user.id === user.id).length === 0) {
+                if (likers.filter(u => u.id === user.id).length === 0) {
                     (await post.likers).push(user);
                 } else {
                     console.log(`User ${user.id} already liked post ${post.id}`)
