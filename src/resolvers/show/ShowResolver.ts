@@ -84,14 +84,19 @@ export class ShowResolver {
         if (!user) throw new Error("User not found!");
         if (!show) throw new Error("Show not found!");
 
-        const attendees = await show.attendees
-        if (attendees.filter(u => u.id === user.id).length === 0) {
-            (await show.attendees).push(user)
-            console.log(`Adding user to attendees ${user.id}, show ${show.id}`)
+        const attendees = await show.attendees;
+
+        if (!attendees) {
+            show.attendees = [user];
         } else {
-            const index = attendees.indexOf(user);
-            (await show.attendees).splice(index, 1);
-            console.log(`Removing user from attendees ${user.id}, show ${show.id}`)
+            if (attendees.filter(u => u.id === user.id).length === 0) {
+                (await show.attendees).push(user)
+                console.log(`Adding user to attendees ${user.id}, show ${show.id}`)
+            } else {
+                const index = attendees.indexOf(user);
+                (await show.attendees).splice(index, 1);
+                console.log(`Removing user from attendees ${user.id}, show ${show.id}`)
+            }
         }
 
         await show.save();
