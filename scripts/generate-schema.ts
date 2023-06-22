@@ -6,16 +6,18 @@ import 'reflect-metadata';
 
 import { SetResolver, ShowResolver, SongInstanceResolver, SongResolver, VenueResolver } from '../src/resolvers/show';
 import { PostResolver } from '../src/resolvers/forum';
+import { UserResolver } from '../src/resolvers/user/UserResolver';
 
 async function createSchema() {
     return await buildSchema({
         container: Container,
         resolvers: [
             PostResolver,
-            SetResolver,
             ShowResolver,
             SongResolver,
             SongInstanceResolver,
+            SetResolver,
+            UserResolver,
             VenueResolver,
         ],
         dateScalarMode: 'isoDate',
