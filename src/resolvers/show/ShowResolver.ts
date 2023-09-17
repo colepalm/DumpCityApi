@@ -22,7 +22,7 @@ export class ShowResolver {
 
     @Query(() => Show)
     async show(@Arg('show') show: FindShowInput) {
-        const res = await Show.findOne({
+        const res = await this.showRepository.findOne({
             where: [
                 { id: show.id },
                 { date: show.date }
@@ -38,11 +38,23 @@ export class ShowResolver {
             pagination?: PaginationInput
     ) {
         // TODO: Figure out how to filter out shows without setlists
-        return await Show.find({
+        return await this.showRepository.find({
             take: pagination?.take || 10,
             order: { date: 'DESC' },
             skip: pagination?.skip || 0,
         })
+    }
+
+    @Query(() => [Show])
+    async showsByYear(
+        @Arg("year", { nullable: false })
+            year: Number
+    ) {
+        // TODO: Figure out how to filter out shows without setlists
+        return await this.showRepository
+            .createQueryBuilder('entry')
+            .where('YEAR(entry.dateField) = :year', { year }) // Assuming 'dateField' is your Date field
+            .getMany();
     }
 
     @Mutation(() => Show)
