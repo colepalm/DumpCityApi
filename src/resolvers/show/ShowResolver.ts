@@ -50,10 +50,9 @@ export class ShowResolver {
         @Arg("year", { nullable: false })
             year: Number
     ) {
-        // TODO: Figure out how to filter out shows without setlists
         return await this.showRepository
-            .createQueryBuilder('entry')
-            .where('YEAR(entry.dateField) = :year', { year }) // Assuming 'dateField' is your Date field
+            .createQueryBuilder('show')
+            .where('EXTRACT(YEAR FROM show.date) = :year', { year })
             .getMany();
     }
 
