@@ -76,7 +76,7 @@ export class PostResolver {
         if (!user) throw new Error(`User ${data.user} not found`)
 
         if (data.isLiked) {
-            let likers: User[] = await post.likers
+            let likers: User[] = await post.likers;
             if (likers) {
                 if (likers.filter(u => u.id === user.id).length === 0) {
                     (await post.likers).push(user);

@@ -70,7 +70,9 @@ export class ShowResolver {
 
     @Mutation(() => Show)
     async updateSetlist(@Arg('data') data: UpdateSetlistInput) {
-        const show = await this.showRepository.findOne({ where: { id: data.id } });
+        const show = await this.showRepository.findOne(
+            { where: { id: data.id } }
+        );
         if (!show) throw new Error("Show not found!");
 
         const setlist: Set[] = []
