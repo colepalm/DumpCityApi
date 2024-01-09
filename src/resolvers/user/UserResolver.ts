@@ -42,26 +42,33 @@ export class UserResolver {
 
         const show = await this.showRepository.findOne(
             { where: { date: data.date } }
-        )
-        if (!show) throw new Error("Show not found!")
+        );
+        if (!show) throw new Error("Show not found!");
+
+        let myShows = await user.myShows;
 
         if (data.didAttend) {
             // Check if the show is already in myShows
-            let myShows: Show[] = await user.myShows;
-            if (myShows) {
-                if (myShows.filter(show => show.date === data.date).length === 0) {
-                    (await user.myShows).push(show)
-                } else {
-                    console.log(`User ${user.id} has already added show ${show.date} to myShows`)
-                }
-            } else user.myShows = [show]
+            if (!myShows.some(s => s.id === show.id)) {
+                myShows.push(show);
+                console.log(`Added show to user's myShows: User ${user.id}, Show ${show.date}`);
+            } else {
+                console.log(`Show already in user's myShows: User ${user.id}, Show ${show.date}`);
+            }
         } else {
-            const index = (await user.myShows).indexOf(show);
-            (await user.myShows).splice(index, 1)
+            // Remove the show if it exists in myShows
+            const index = myShows.findIndex(s => s.id === show.id);
+            if (index !== -1) {
+                myShows.splice(index, 1);
+                console.log(`Removed show from user's myShows: User ${user.id}, Show ${show.date}`);
+            } else {
+                console.log(`Show not found in user's myShows: User ${user.id}, Show ${show.date}`);
+            }
         }
 
+        // Save the updated user
         await this.userRepository.save(user);
-        console.log(`Saved show toggle: user ${user.id}, show ${show.date}, toggle: ${data.didAttend}`)
+        console.log(`User's myShows updated: User ${user.id}, Show ${show.date}, Attendance: ${data.didAttend}`);
         return user;
     }
 }
