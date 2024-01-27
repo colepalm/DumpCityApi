@@ -3,7 +3,7 @@ import { InputType, Field } from 'type-graphql';
 @InputType()
 export class ToggleMyShowsInput {
     @Field()
-    userId: number;
+    userId: string;
 
     @Field()
     date: Date;

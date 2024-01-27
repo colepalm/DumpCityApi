@@ -10,7 +10,7 @@ import { ToggleMyShowsInput } from '../../inputs/user/ToggleMyShowsInput';
 @Resolver()
 export class UserResolver {
     constructor(
-        @InjectRepository(User) private readonly showRepository: Repository<Show>,
+        @InjectRepository(Show) private readonly showRepository: Repository<Show>,
         @InjectRepository(User) private readonly userRepository: Repository<User>
     ) { }
 
