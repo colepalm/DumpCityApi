@@ -6,7 +6,7 @@ export class ToggleMyShowsInput {
     userId: string;
 
     @Field()
-    date: Date;
+    date: string;
 
     @Field()
     didAttend: Boolean
