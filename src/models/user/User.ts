@@ -36,7 +36,7 @@ export class User extends BaseEntity {
     })
     email: string;
 
-    @Field(() => [Post])
+    @Field(_ => [Post])
     @ManyToMany(
         type => Post,
         { lazy: true,  nullable: true }
@@ -44,8 +44,8 @@ export class User extends BaseEntity {
     @JoinTable()
     likes: Lazy<Post[]>;
 
-    @Field(() => [Show])
-    @OneToMany(
+    @Field(_ => [Show])
+    @ManyToMany(
         _ => Show,
         show => show.attendees,
         { lazy: true, nullable: true }

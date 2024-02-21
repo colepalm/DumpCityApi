@@ -2,6 +2,7 @@ import {
     BaseEntity,
     Column,
     Entity,
+    ManyToMany,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -32,7 +33,7 @@ export class Show extends BaseEntity {
     @Column({ type: 'int', default: 0 })
     rating: number;
 
-    @Field(type => [Set], { nullable: true  })
+    @Field(_ => [Set], { nullable: true  })
     @OneToMany(
         type => Set,
         set => set.show,
@@ -40,10 +41,11 @@ export class Show extends BaseEntity {
     )
     setlist: Lazy<Set[]>;
 
-    @Field(_ => User)
-    @ManyToOne(
+    @Field(_ => [User])
+    @ManyToMany(
         _ => User,
         user => user.myShows,
-        { lazy: true, nullable: true })
+        { lazy: true, nullable: true }
+    )
     attendees: Lazy<User[]>;
 }
