@@ -1,7 +1,7 @@
 import {
     BaseEntity,
     Column,
-    Entity,
+    Entity, JoinTable,
     ManyToMany,
     ManyToOne,
     OneToMany,
@@ -47,5 +47,6 @@ export class Show extends BaseEntity {
         user => user.myShows,
         { lazy: true, nullable: true }
     )
+    @JoinTable()
     attendees: Lazy<User[]>;
 }
